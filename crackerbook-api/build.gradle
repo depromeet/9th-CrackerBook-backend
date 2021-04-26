@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(":crackerbook-core")
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}

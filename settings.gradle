@@ -1,1 +1,3 @@
 rootProject.name = 'crackerbook'
+include 'crackerbook-api'
+include 'crackerbook-core'
