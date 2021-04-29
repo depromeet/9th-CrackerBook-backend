@@ -1,5 +1,6 @@
 package com.depromeet.crackerbook.domain.book;
 
+import com.depromeet.crackerbook.domain.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,4 +34,7 @@ public class Book {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
+    private Study study;
 }
