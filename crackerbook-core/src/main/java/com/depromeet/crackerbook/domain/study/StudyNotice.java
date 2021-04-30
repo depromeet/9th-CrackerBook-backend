@@ -2,8 +2,11 @@ package com.depromeet.crackerbook.domain.study;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,4 +18,16 @@ public class StudyNotice {
     @Column(name = "study_notic_id")
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_id")
+    private Study study;
+
+    @Column(columnDefinition = "TEXT")
+    private String contents;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

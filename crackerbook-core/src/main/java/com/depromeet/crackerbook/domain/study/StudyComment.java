@@ -11,19 +11,18 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-public class StudyReview {
+public class StudyComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "study_review_id")
+    @Column(name = "study_comment_id")
     private Long id;
-
-    private String grade;
-    private String contents;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
+
+    private String comment;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

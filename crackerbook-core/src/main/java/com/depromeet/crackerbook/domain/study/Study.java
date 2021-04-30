@@ -17,6 +17,7 @@ public class Study {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "study_id")
     private Long id;
 
     @Column
@@ -26,7 +27,7 @@ public class Study {
     private String description;
 
 //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 

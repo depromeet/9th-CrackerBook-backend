@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +36,6 @@ public class Book {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToOne(mappedBy = "book", fetch = FetchType.LAZY)
-    private Study study;
+    @OneToMany(mappedBy = "book")
+    private List<Study> studyList;
 }
