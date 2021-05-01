@@ -18,10 +18,6 @@ public class StudyNotice {
     @Column(name = "study_notic_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id")
-    private Study study;
-
     @Column(columnDefinition = "TEXT")
     private String contents;
 
@@ -30,4 +26,8 @@ public class StudyNotice {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_id")
+    private Study study;
 }
