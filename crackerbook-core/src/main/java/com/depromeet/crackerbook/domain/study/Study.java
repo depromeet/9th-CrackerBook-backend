@@ -1,7 +1,7 @@
 package com.depromeet.crackerbook.domain.study;
 
-import com.depromeet.crackerbook.domain.book.Book;
-import com.depromeet.crackerbook.domain.study.StudyReview;
+import com.depromeet.crackerbook.domain.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class Study {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Study extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,6 @@ public class Study {
 
     @Column(columnDefinition = "TEXT")
     private String description;
-
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private Book book;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_review_id")

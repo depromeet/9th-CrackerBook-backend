@@ -1,10 +1,11 @@
 package com.depromeet.crackerbook.domain.book;
 
+import com.depromeet.crackerbook.domain.BaseEntity;
 import com.depromeet.crackerbook.domain.study.Study;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,8 +13,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class Book {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +31,30 @@ public class Book {
     private String publisher;
     private LocalDateTime published_at;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "book")
     private List<Study> studyList;
+
+    @Builder
+    public Book(
+            String name,
+            String contents,
+            String imageUrlSmall,
+            String imageUrlBig,
+            String authors,
+            Integer price,
+            Integer salePrice,
+            String publisher,
+            LocalDateTime published_at
+    ) {
+        this.name = name;
+        this.contents = contents;
+        this.imageUrlSmall = imageUrlSmall;
+        this.imageUrlBig = imageUrlBig;
+        this.authors = authors;
+        this.price = price;
+        this.salePrice = salePrice;
+        this.publisher = publisher;
+        this.published_at = published_at;
+    }
+
 }

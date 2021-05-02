@@ -1,17 +1,17 @@
 package com.depromeet.crackerbook.domain.study;
 
+import com.depromeet.crackerbook.domain.BaseEntity;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class StudyReview {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class StudyReview extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class StudyReview {
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    @Builder
+    public StudyReview(String grade, String contents) {
+        this.grade = grade;
+        this.contents = contents;
+    }
 }
