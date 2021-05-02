@@ -85,3 +85,4 @@ public class Study extends BaseEntity {
     @JoinColumn(name = "study_notice_id")
     private List<StudyNotice> studyNoticeList = new ArrayList<>();
 }
+
