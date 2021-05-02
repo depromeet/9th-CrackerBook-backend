@@ -18,15 +18,13 @@ public class StudyComment extends BaseEntity {
     @Column(name = "study_comment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id")
-    private Study study;
+    private Long studyId;
 
     private String comment;
 
     @Builder
-    public StudyComment(Study study, String comment) {
-        this.study = study;
+    public StudyComment(Long studyId, String comment) {
+        this.studyId = studyId;
         this.comment = comment;
     }
 }
