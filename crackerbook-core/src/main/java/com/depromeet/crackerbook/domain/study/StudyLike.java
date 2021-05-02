@@ -11,23 +11,19 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StudyNotice extends BaseEntity {
+public class StudyLike extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "study_notice_id")
+    @Column(name = "study_like_id")
     private Long id;
 
-    private Long studyId;
     private Long userId;
-
-    @Column(columnDefinition = "TEXT")
-    private String contents;
+    private Long studyId;
 
     @Builder
-    public StudyNotice(Long studyId, Long userId, String contents) {
-        this.studyId = studyId;
+    public StudyLike(Long userId, Long studyId) {
         this.userId = userId;
-        this.contents = contents;
+        this.studyId = studyId;
     }
 }

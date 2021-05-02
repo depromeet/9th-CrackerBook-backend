@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,10 +30,15 @@ public class Book extends BaseEntity {
     private Integer price;
     private Integer salePrice;
     private String publisher;
-    private LocalDateTime published_at;
+    private LocalDateTime publishedAt;
 
     @OneToMany(mappedBy = "book")
-    private List<Study> studyList;
+    @JoinColumn(name = "study_id")
+    private List<Study> studyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    @JoinColumn(name = "book_like_id")
+    private List<BookLike> bookLikeList = new ArrayList<>();
 
     @Builder
     public Book(
@@ -44,7 +50,7 @@ public class Book extends BaseEntity {
             Integer price,
             Integer salePrice,
             String publisher,
-            LocalDateTime published_at
+            LocalDateTime publishedAt
     ) {
         this.name = name;
         this.contents = contents;
@@ -54,7 +60,7 @@ public class Book extends BaseEntity {
         this.price = price;
         this.salePrice = salePrice;
         this.publisher = publisher;
-        this.published_at = published_at;
+        this.publishedAt = publishedAt;
     }
 
 }

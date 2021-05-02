@@ -1,4 +1,4 @@
-package com.depromeet.crackerbook.domain.study;
+package com.depromeet.crackerbook.domain.book;
 
 import com.depromeet.crackerbook.domain.BaseEntity;
 import lombok.AccessLevel;
@@ -11,23 +11,19 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StudyNotice extends BaseEntity {
+public class BookLike extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "study_notice_id")
+    @Column(name = "book_like_id")
     private Long id;
 
-    private Long studyId;
     private Long userId;
-
-    @Column(columnDefinition = "TEXT")
-    private String contents;
+    private Long bookId;
 
     @Builder
-    public StudyNotice(Long studyId, Long userId, String contents) {
-        this.studyId = studyId;
+    public BookLike(Long userId, Long bookId) {
         this.userId = userId;
-        this.contents = contents;
+        this.bookId = bookId;
     }
 }
