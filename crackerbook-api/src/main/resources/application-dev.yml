@@ -7,6 +7,6 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
     disable-swagger-default-url: false
-    swagger-ui.display-query-params-without-oauth2: true
+    display-query-params-without-oauth2: true
   paths-to-match:
     - /api/**
