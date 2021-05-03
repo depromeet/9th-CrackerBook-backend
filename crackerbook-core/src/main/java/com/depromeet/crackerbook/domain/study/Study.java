@@ -34,7 +34,7 @@ public class Study extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private StudyPlaceType placeType;
-    private String placeText;
+    private String address;
     private Integer capacity;
 
     private LocalDateTime studyStartDate;
@@ -55,7 +55,7 @@ public class Study extends BaseEntity {
             String description,
             StudyDifficulty status,
             StudyPlaceType placeType,
-            String placeText,
+            String address,
             Integer capacity,
             LocalDateTime studyStartDate,
             LocalDateTime studyEndDate,
@@ -69,7 +69,7 @@ public class Study extends BaseEntity {
         this.description = description;
         this.status = status;
         this.placeType = placeType;
-        this.placeText = placeText;
+        this.address = address;
         this.capacity = capacity;
         this.studyStartDate = studyStartDate;
         this.studyEndDate = studyEndDate;
