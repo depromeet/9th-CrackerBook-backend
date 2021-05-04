@@ -1,10 +1,7 @@
 package com.depromeet.crackerbook.service.study;
 
-import com.depromeet.crackerbook.domain.study.Study;
-import com.depromeet.crackerbook.domain.study.StudyRepository;
+import com.depromeet.crackerbook.domain.study.repository.StudyRepository;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class StudyService {
@@ -13,10 +10,5 @@ public class StudyService {
 
     public StudyService(StudyRepository studyRepository){
         this.studyRepository = studyRepository;
-    }
-
-    @Transactional
-    public Long createStudy(Study study){
-        return studyRepository.save(study).getId();
     }
 }

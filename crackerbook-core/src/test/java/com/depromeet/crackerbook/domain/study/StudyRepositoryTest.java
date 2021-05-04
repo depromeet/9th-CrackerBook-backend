@@ -1,5 +1,6 @@
 package com.depromeet.crackerbook.domain.study;
 
+import com.depromeet.crackerbook.domain.study.repository.StudyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
