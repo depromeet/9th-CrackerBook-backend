@@ -16,7 +16,7 @@ public class Reward extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reward_id")
-    private Long id;
+    private Long rewardId;
 
     private String name;
     private String description;

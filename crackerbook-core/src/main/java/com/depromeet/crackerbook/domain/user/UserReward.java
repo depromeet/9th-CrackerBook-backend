@@ -1,6 +1,7 @@
 package com.depromeet.crackerbook.domain.user;
 
 import com.depromeet.crackerbook.domain.BaseEntity;
+import com.depromeet.crackerbook.domain.reward.Reward;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,13 @@ public class UserReward extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_reward_id")
-    private Long id;
+    private Long userRewardId;
 
-    private Long userId;
-    private Long rewardId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public UserReward(Long userId, Long rewardId) {
-        this.userId = userId;
-        this.rewardId = rewardId;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reward_id")
+    private Reward reward;
 }

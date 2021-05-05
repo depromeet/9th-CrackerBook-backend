@@ -1,8 +1,8 @@
 package com.depromeet.crackerbook.domain.book;
 
 import com.depromeet.crackerbook.domain.BaseEntity;
+import com.depromeet.crackerbook.domain.user.User;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,14 +16,13 @@ public class BookLike extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_like_id")
-    private Long id;
+    private Long bookLikeId;
 
-    private Long userId;
-    private Long bookId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Builder
-    public BookLike(Long userId, Long bookId) {
-        this.userId = userId;
-        this.bookId = bookId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 }
