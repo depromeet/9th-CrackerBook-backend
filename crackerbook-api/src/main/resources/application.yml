@@ -1,3 +1,12 @@
 spring:
   profiles:
     active: dev
+  datasource:
+    hikari:
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        default_batch_fetch_size: 100
