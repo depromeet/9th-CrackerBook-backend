@@ -1,6 +1,14 @@
 dependencies {
     implementation project(":crackerbook-core")
+
+    // spring
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // etc
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.8'
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.postgresql:postgresql'
+
+    // test
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -1,3 +1,18 @@
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:postgresql://crackerbook-dev.cyzqbwenql3o.ap-northeast-2.rds.amazonaws.com/crackerbook
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl.auto: update
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
 springdoc:
   version: 0.0.1
   api-docs:
