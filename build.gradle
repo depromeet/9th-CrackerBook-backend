@@ -18,7 +18,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
-    apply plugin : 'io.spring.dependency-management'
+    apply plugin: 'io.spring.dependency-management'
 
     sourceCompatibility = '11'
 
@@ -33,6 +33,27 @@ subprojects {
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
+
+        // QueryDSL
+        compile("com.querydsl:querydsl-core")
+        compile("com.querydsl:querydsl-jpa")
+        annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+        annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+        annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+    }
+
+    def generated='src/main/generated'
+
+    sourceSets {
+        main.java.srcDirs += [ generated ]
+    }
+
+    tasks.withType(JavaCompile) {
+        options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+    }
+
+    clean.doLast {
+        file(generated).deleteDir()
     }
 
     test {
