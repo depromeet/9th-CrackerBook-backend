@@ -1,9 +1,20 @@
+ext {
+    springCloudVersion = '2020.0.2'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     implementation project(":crackerbook-core")
 
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     // etc
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.8'

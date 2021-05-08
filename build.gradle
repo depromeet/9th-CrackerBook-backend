@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.4.4'
+        queryDslVersion = '4.4.0'
     }
     repositories {
         mavenCentral()
@@ -37,7 +38,8 @@ subprojects {
         // QueryDSL
         compile("com.querydsl:querydsl-core")
         compile("com.querydsl:querydsl-jpa")
-        annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+//        annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+        annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
         annotationProcessor("jakarta.persistence:jakarta.persistence-api")
         annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     }
