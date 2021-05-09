@@ -14,6 +14,9 @@ public enum ErrorCode {
     // USER [01xx]
     INVALID_USER("0101", "유효하지 않은 사용자입니다."),
 
+    // STUDY [02xx]
+    INVALID_STUDY("0201", "유효하지 않은 스터디 입니다."),
+
     // BOOK[03xx]
     INVALID_BOOK_NAME_KEYWORD("0301", "유효하지 않은 책 이름 입니다."),
     INVALID_BOOK_AUTHOR_KEYWORD("0302", "유효하지 않은 작가 이름 입니다."),
