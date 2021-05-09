@@ -3,16 +3,16 @@ package com.depromeet.crackerbook.domain.study;
 import com.depromeet.crackerbook.domain.BaseEntity;
 import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.domain.category.StudyCategory;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Study extends BaseEntity {
 
@@ -48,7 +48,57 @@ public class Study extends BaseEntity {
     private LocalDateTime recruitStartAt;
     private LocalDateTime recruitEndAt;
 
-// 이것을 어떻게 처리할까요..? convert Class를 만드는것 같더라구요..
-//    @Column(columnDefinition = "json")
-//    private String frequency;
+    // TODO JSON TYPE으로 하기로 했는데
+    //  @Column(columnDefinition = "json")
+    private String frequency;
+
+    public static Study createStudy(
+            String studyName
+            , String bookName
+            , String description
+            , StudyDifficulty difficulty
+            , StudyPlaceType placeType
+            , int capacity
+            , LocalDate studyStartDate
+            , LocalDate studyEndDate
+            , LocalDateTime recruitStartAt
+            , LocalDateTime recruitEndAt
+            , String frequency
+    ) {
+        return new StudyBuilder()
+                .studyName(studyName)
+                .bookName(bookName)
+                .description(description)
+                .difficulty(difficulty)
+                .placeType(placeType)
+                .capacity(capacity)
+                .studyStartDate(studyStartDate)
+                .studyEndDate(studyEndDate)
+                .recruitStartAt(recruitStartAt)
+                .recruitEndAt(recruitEndAt)
+                .frequency(frequency)
+                .build();
+    }
+
+    public void updateStudy(
+            String studyName
+            , String description
+            , StudyDifficulty difficulty
+            , StudyPlaceType placeType
+            , int capacity
+            , LocalDate studyStartDate
+            , LocalDate studyEndDate
+            , LocalDateTime recruitStartAt
+            , LocalDateTime recruitEndAt
+    ) {
+        this.studyName = studyName;
+        this.description = description;
+        this.difficulty = difficulty;
+        this.placeType = placeType;
+        this.capacity = capacity;
+        this.studyStartDate = studyStartDate;
+        this.studyEndDate = studyEndDate;
+        this.recruitStartAt = recruitStartAt;
+        this.recruitEndAt = recruitEndAt;
+    }
 }
