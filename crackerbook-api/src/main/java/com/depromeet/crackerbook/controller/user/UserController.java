@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @Operation(summary = "사용자 정보 조회")
-    @GetMapping("/{user_id}")
-    public UserResponse getUserInfo(@PathVariable("user_id") Long userId) {
+    @GetMapping("/{userId}")
+    public UserResponse getUserInfo(@PathVariable Long userId) {
         User user = userService.findUserById(userId);
         return UserResponse.from(user);
     }
