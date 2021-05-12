@@ -42,6 +42,11 @@ public class UserService {
                 JwtUtil.generateToken(userDetails, TokenType.REFRESH_TOKEN));
     }
 
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALD_USER));
+    }
+
     public void authenticate(String email) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, email));
