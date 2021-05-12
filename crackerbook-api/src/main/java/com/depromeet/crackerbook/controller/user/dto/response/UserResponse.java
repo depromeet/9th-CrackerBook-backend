@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 public class UserResponse {
 
     private final String email;
-    private final String nickName;
+    private final String nickname;
     private final String imageUrl;
     private final String introduce;
 
     public static UserResponse from(User user) {
-        return new UserResponse(user.getEmail(), user.getNickName(), user.getImageUrl(), user.getIntroduce());
+        return new UserResponse(user.getEmail(), user.getNickname(), user.getImageUrl(), user.getIntroduce());
     }
 }

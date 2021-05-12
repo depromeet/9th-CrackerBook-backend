@@ -3,6 +3,7 @@ package com.depromeet.crackerbook.controller.user;
 import com.depromeet.crackerbook.config.auth.UserDetailsServiceImpl;
 import com.depromeet.crackerbook.controller.user.dto.KakaoUserDto;
 import com.depromeet.crackerbook.controller.user.dto.request.SignInKakaoRequest;
+import com.depromeet.crackerbook.controller.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.crackerbook.controller.user.dto.response.SignInKakaoResponse;
 import com.depromeet.crackerbook.controller.user.dto.response.UserResponse;
 import com.depromeet.crackerbook.domain.user.User;
@@ -42,6 +43,13 @@ public class UserController {
     @GetMapping("/{userId}")
     public UserResponse getUserInfo(@PathVariable Long userId) {
         User user = userService.findUserById(userId);
+        return UserResponse.from(user);
+    }
+
+    @Operation(summary = "사용자 정보 수정")
+    @PutMapping("/{userId}")
+    public UserResponse updateUserInfo(@PathVariable Long userId, @RequestBody UpdateUserInfoRequest dto) {
+        User user = userService.updateUser(userId, dto);
         return UserResponse.from(user);
     }
 }

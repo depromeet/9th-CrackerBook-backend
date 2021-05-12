@@ -3,6 +3,7 @@ package com.depromeet.crackerbook.service.user;
 import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.config.auth.TokenType;
 import com.depromeet.crackerbook.controller.user.dto.KakaoUserDto;
+import com.depromeet.crackerbook.controller.user.dto.request.UpdateUserInfoRequest;
 import com.depromeet.crackerbook.domain.user.SnsType;
 import com.depromeet.crackerbook.domain.user.User;
 import com.depromeet.crackerbook.domain.user.repository.UserRepository;
@@ -45,6 +46,12 @@ public class UserService {
     public User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(ErrorCode.INVALD_USER));
+    }
+
+    @Transactional
+    public User updateUser(Long userId, UpdateUserInfoRequest dto) {
+        User user = findUserById(userId);
+        return user.updateInfo(dto.getNickname(), dto.getImageUrl(), dto.getIntroduce());
     }
 
     public void authenticate(String email) {
