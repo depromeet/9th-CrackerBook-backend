@@ -30,12 +30,17 @@ public class KakaoService {
     private final KakaoAuthClient kakaoAuthClient;
     private final KakaoApiClient kakaoApiClient;
 
-    public KakaoTokenDto getKakaoToken(SignInKakaoRequest dto) {
+    public KakaoUserDto kakaoLogin(SignInKakaoRequest dto) {
+        KakaoTokenDto kakaoToken = getKakaoToken(dto);
+        return getKakaoUser(kakaoToken.getAccess_token());
+    }
+
+    private KakaoTokenDto getKakaoToken(SignInKakaoRequest dto) {
         String redirectUri = frontendDomain + kakaoRedirectUri;
         return kakaoAuthClient.getKakaoToken(GRANT_TYPE, kakaoClientId, redirectUri, dto.getCode());
     }
 
-    public KakaoUserDto getKakaoUser(String accessToken) {
+    private KakaoUserDto getKakaoUser(String accessToken) {
         if (StringUtils.isEmpty(accessToken)) {
             throw new ApiException(ErrorCode.REQUIRED_KAKAO_ACCESS_TOKEN);
         }

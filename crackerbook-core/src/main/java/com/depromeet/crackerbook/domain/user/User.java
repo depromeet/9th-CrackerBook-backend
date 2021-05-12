@@ -37,4 +37,11 @@ public class User extends BaseEntity {
                 .snsId(snsId)
                 .email(email);
     }
+
+    public String updateToken(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+
+        return this.accessToken;
+    }
 }
