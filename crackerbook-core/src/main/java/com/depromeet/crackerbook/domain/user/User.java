@@ -20,7 +20,7 @@ public class User extends BaseEntity {
     private Long userId;
 
     private String email;
-    private String nickName;
+    private String nickname;
     private String imageUrl;
     private String introduce;
 
@@ -43,5 +43,13 @@ public class User extends BaseEntity {
         this.refreshToken = refreshToken;
 
         return this.accessToken;
+    }
+
+    public User updateInfo(String nickname, String imageUrl, String introduce) {
+        this.nickname = nickname;
+        this.imageUrl = imageUrl;
+        this.introduce = introduce;
+
+        return this;
     }
 }
