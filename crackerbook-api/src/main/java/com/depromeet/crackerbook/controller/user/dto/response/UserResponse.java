@@ -6,15 +6,25 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserResponse {
 
-    private final String email;
-    private final String nickname;
-    private final String imageUrl;
-    private final String introduce;
+    private final UserDto user;
+
+    private UserResponse(User user) {
+        this.user = new UserDto(user.getEmail(), user.getNickname(), user.getImageUrl(), user.getIntroduce());
+    }
 
     public static UserResponse from(User user) {
-        return new UserResponse(user.getEmail(), user.getNickname(), user.getImageUrl(), user.getIntroduce());
+        return new UserResponse(user);
+    }
+
+    @Getter
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+    private static class UserDto {
+
+        private final String email;
+        private final String nickname;
+        private final String imageUrl;
+        private final String introduce;
     }
 }
