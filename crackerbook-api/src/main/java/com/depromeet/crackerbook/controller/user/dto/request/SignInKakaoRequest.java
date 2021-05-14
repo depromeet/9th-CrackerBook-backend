@@ -1,7 +1,7 @@
 package com.depromeet.crackerbook.controller.user.dto.request;
 
 import com.depromeet.crackerbook.common.ErrorCode;
-import com.depromeet.crackerbook.exception.ApiException;
+import com.depromeet.crackerbook.exception.BadRequestApiException;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,7 +12,7 @@ public class SignInKakaoRequest {
 
     public void validate() {
         if (StringUtils.isEmpty(code)) {
-            throw new ApiException(ErrorCode.REQUIRED_KAKAO_CODE);
+            throw new BadRequestApiException(ErrorCode.REQUIRED_KAKAO_CODE);
         }
     }
 }

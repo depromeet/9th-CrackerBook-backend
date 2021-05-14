@@ -13,6 +13,12 @@ public enum ErrorCode {
 
     // USER [01xx]
     INVALD_USER("0101", "유효하지 않은 사용자입니다."),
+
+    // COMMON [99xx]
+    INVALID_INPUT_VALUE("9901", "유효하지 않은 값입니다."),
+    INVALID_TYPE_VALUE("9902", "유효하지 않은 타입입니다."),
+    METHOD_NOT_ALLOWED("9903", "지원하지 않는 메서드입니다."),
+    UNEXPECTED_ERROR("9999", "알 수 없는 에러입니다.")
     ;
 
     private final String code;
