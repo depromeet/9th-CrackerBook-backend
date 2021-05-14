@@ -1,6 +1,7 @@
 package com.depromeet.crackerbook.controller.user;
 
 import com.depromeet.crackerbook.config.auth.UserDetailsServiceImpl;
+import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.user.dto.KakaoUserDto;
 import com.depromeet.crackerbook.controller.user.dto.request.SignInKakaoRequest;
 import com.depromeet.crackerbook.controller.user.dto.request.UpdateUserInfoRequest;
@@ -25,7 +26,7 @@ public class UserController {
 
     @Operation(summary = "카카오 로그인")
     @PostMapping("/sign-in/kakao")
-    public SignInKakaoResponse signInKakao(@RequestBody SignInKakaoRequest dto) {
+    public SuccessResponse<SignInKakaoResponse> signInKakao(@RequestBody SignInKakaoRequest dto) {
         dto.validate();
 
         KakaoUserDto kakaoUserDto = kakaoService.kakaoLogin(dto);
@@ -36,20 +37,26 @@ public class UserController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
         String accessToken = userService.updateToken(user, userDetails);
-        return SignInKakaoResponse.builder().accessToken(accessToken).build();
+        var response = SignInKakaoResponse.from(accessToken);
+
+        return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "사용자 정보 조회")
     @GetMapping("/{userId}")
-    public UserResponse getUserInfo(@PathVariable Long userId) {
+    public SuccessResponse<UserResponse> getUserInfo(@PathVariable Long userId) {
         User user = userService.findUserById(userId);
-        return UserResponse.from(user);
+        var response = UserResponse.from(user);
+
+        return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "사용자 정보 수정")
     @PutMapping("/{userId}")
-    public UserResponse updateUserInfo(@PathVariable Long userId, @RequestBody UpdateUserInfoRequest dto) {
+    public SuccessResponse<UserResponse> updateUserInfo(@PathVariable Long userId, @RequestBody UpdateUserInfoRequest dto) {
         User user = userService.updateUser(userId, dto);
-        return UserResponse.from(user);
+        var response = UserResponse.from(user);
+
+        return new SuccessResponse<>(response);
     }
 }
