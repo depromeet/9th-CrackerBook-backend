@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     /**
      * 400 에러
      */
-    @ExceptionHandler({BadRequestApiException.class})
+    @ExceptionHandler(BadRequestApiException.class)
     public ResponseEntity<ErrorResponse> badRequestExceptionHandler(BadRequestApiException e) {
         ErrorCode errorCode = ErrorCode.valueOf(e.getMessage());
         return new ResponseEntity<>(ErrorResponse.of(errorCode), HttpStatus.BAD_REQUEST);
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
     /**
      * 404 에러
      */
-    @ExceptionHandler({NotFoundApiException.class})
+    @ExceptionHandler(NotFoundApiException.class)
     public ResponseEntity<ErrorResponse> notFoundApiExceptionHandler(NotFoundApiException e) {
         ErrorCode errorCode = ErrorCode.valueOf(e.getMessage());
         return new ResponseEntity<>(ErrorResponse.of(errorCode), HttpStatus.NOT_FOUND);
@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
     /**
      * 500 에러
      */
-    @ExceptionHandler({ApiException.class})
+    @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponse> apiExceptionHandler(ApiException e) {
         ErrorCode errorCode = ErrorCode.valueOf(e.getMessage());
         return new ResponseEntity<>(ErrorResponse.of(errorCode), HttpStatus.INTERNAL_SERVER_ERROR);

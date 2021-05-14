@@ -46,7 +46,7 @@ public class ErrorResponse extends BaseResponse {
 
     @Getter
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class FieldError {
+    private static class FieldError {
 
         private final String field;
         private final String value;
