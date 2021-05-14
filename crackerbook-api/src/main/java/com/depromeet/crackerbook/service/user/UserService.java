@@ -7,7 +7,7 @@ import com.depromeet.crackerbook.controller.user.dto.request.UpdateUserInfoReque
 import com.depromeet.crackerbook.domain.user.SnsType;
 import com.depromeet.crackerbook.domain.user.User;
 import com.depromeet.crackerbook.domain.user.repository.UserRepository;
-import com.depromeet.crackerbook.exception.ApiException;
+import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,7 +45,7 @@ public class UserService {
 
     public User findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ApiException(ErrorCode.INVALD_USER));
+                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALD_USER));
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class UserService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, email));
         } catch (BadCredentialsException e) {
-            throw new ApiException(ErrorCode.INVALD_USER);
+            throw new NotFoundApiException(ErrorCode.INVALD_USER);
         }
     }
 }
