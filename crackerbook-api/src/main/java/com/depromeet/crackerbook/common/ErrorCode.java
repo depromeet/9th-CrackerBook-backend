@@ -12,7 +12,7 @@ public enum ErrorCode {
     REQUIRED_KAKAO_ACCESS_TOKEN("0002", "kakao access token은 null일 수 없습니다."),
 
     // USER [01xx]
-    INVALD_USER("0101", "유효하지 않은 사용자입니다."),
+    INVALID_USER("0101", "유효하지 않은 사용자입니다."),
 
     // COMMON [99xx]
     INVALID_INPUT_VALUE("9901", "유효하지 않은 값입니다."),

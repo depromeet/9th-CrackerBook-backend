@@ -45,7 +45,7 @@ public class UserService {
 
     public User findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALD_USER));
+                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class UserService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, email));
         } catch (BadCredentialsException e) {
-            throw new NotFoundApiException(ErrorCode.INVALD_USER);
+            throw new NotFoundApiException(ErrorCode.INVALID_USER);
         }
     }
 }

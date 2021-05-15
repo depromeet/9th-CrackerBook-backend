@@ -20,6 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository
                 .findByEmail(email)
                 .map(entity -> new SecurityUser(entity.getEmail()))
-                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALD_USER));
+                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
     }
 }
