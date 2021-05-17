@@ -45,7 +45,7 @@ public class StudyLikeRepositoryCustomImpl implements StudyLikeRepositoryCustom 
                 .where(userIdEq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(study.studyId.desc())
+                .orderBy(studyLike.createdAt.desc())
                 .fetchResults();
     }
 
