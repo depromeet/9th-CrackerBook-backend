@@ -69,7 +69,7 @@ public class UserController {
 
     @Operation(summary = "관심 스터디 목록 조회")
     @GetMapping("/{userId}/like/studies")
-    public SuccessResponse<StudyLikeListRepsonse> getFavoriteStudies(
+    public SuccessResponse<StudyLikeListRepsonse> getStudyLikeList(
             @PathVariable Long userId
             , @Parameter(description = "페이지", required = true) @RequestParam int page
             , @Parameter(description = "개수", required = true) @RequestParam int size
