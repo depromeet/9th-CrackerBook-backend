@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,10 +43,10 @@ public class Study extends BaseEntity {
 
     private String address;
     private Integer capacity;
-    private LocalDateTime studyStartDate;
-    private LocalDateTime studyEndDate;
-    private LocalDateTime recruitStartDate;
-    private LocalDateTime recruitEndDate;
+    private LocalDate studyStartDate;
+    private LocalDate studyEndDate;
+    private LocalDateTime recruitStartAt;
+    private LocalDateTime recruitEndAt;
 
 // 이것을 어떻게 처리할까요..? convert Class를 만드는것 같더라구요..
 //    @Column(columnDefinition = "json")
