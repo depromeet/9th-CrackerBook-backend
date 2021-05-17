@@ -76,7 +76,7 @@ public class UserController {
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
         QueryResults<StudyLikeDto> results = studyLikeService.getStudyLikeList(userId, pageRequest);
-        var response = StudyLikeListRepsonse.from(results.getTotal(), results.getResults());
+        var response = StudyLikeListRepsonse.of(results.getTotal(), results.getResults());
 
         return new SuccessResponse<>(response);
     }
