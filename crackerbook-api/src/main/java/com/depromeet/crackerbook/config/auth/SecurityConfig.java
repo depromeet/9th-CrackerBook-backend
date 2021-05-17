@@ -32,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] WHITELIST_HTTP_URL = {
             // API
             "/api/v1/users/sign-in/kakao",
+            "/api/v1/books", // 잠깐 로컬에서 테스트용
+            "/api/v1/books/*", // 잠깐 로컬에서 테스트용
             // ETC
             "/health-check",
     };

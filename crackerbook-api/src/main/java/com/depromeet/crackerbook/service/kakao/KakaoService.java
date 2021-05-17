@@ -1,14 +1,18 @@
 package com.depromeet.crackerbook.service.kakao;
 
 import com.depromeet.crackerbook.common.ErrorCode;
+import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
+import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoSearchResponse;
 import com.depromeet.crackerbook.controller.user.dto.KakaoTokenDto;
 import com.depromeet.crackerbook.controller.user.dto.KakaoUserDto;
 import com.depromeet.crackerbook.controller.user.dto.request.SignInKakaoRequest;
 import com.depromeet.crackerbook.exception.BadRequestApiException;
 import com.depromeet.crackerbook.feign.KakaoApiClient;
 import com.depromeet.crackerbook.feign.KakaoAuthClient;
+import com.depromeet.crackerbook.feign.KakaoBookClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +34,9 @@ public class KakaoService {
     private final KakaoAuthClient kakaoAuthClient;
     private final KakaoApiClient kakaoApiClient;
 
+    @Autowired
+    private final KakaoBookClient kakaoBookClient;
+
     public KakaoUserDto kakaoLogin(SignInKakaoRequest dto) {
         KakaoTokenDto kakaoToken = getKakaoToken(dto);
         return getKakaoUser(kakaoToken.getAccess_token());
@@ -46,4 +53,19 @@ public class KakaoService {
         }
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
+
+    public KakaoBookDto searchKakaoBookByTitle(String title){
+        String clientId = String.format("KakaoAK %s", kakaoClientId);
+        KakaoSearchResponse<KakaoBookDto> test = kakaoBookClient.searchBook(clientId,"title", title);
+        System.out.println("57 " + test.getDocuments().get(0));
+        return new KakaoBookDto();
+    }
+
+//    public KakaoBookDto searchKakaoBookByAuthor(String author){
+//        String clientId = String.format("KakaoAK %s", kakaoClientId);
+//            Map<String, String> test = kakaoBookClient.searchBook(clientId,"title", title);
+//        return kakaoBookClient.searchBook(author, "person", String.format("KakaoAK %s", kakaoClientId));
+//    }
+
+
 }
