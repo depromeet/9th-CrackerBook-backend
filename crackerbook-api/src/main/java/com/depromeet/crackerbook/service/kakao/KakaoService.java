@@ -35,8 +35,6 @@ public class KakaoService {
 
     private final KakaoAuthClient kakaoAuthClient;
     private final KakaoApiClient kakaoApiClient;
-
-    @Autowired
     private final KakaoBookClient kakaoBookClient;
 
     public KakaoUserDto kakaoLogin(SignInKakaoRequest dto) {

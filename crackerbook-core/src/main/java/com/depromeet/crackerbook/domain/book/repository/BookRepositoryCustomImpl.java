@@ -1,16 +1,9 @@
 package com.depromeet.crackerbook.domain.book.repository;
 
-import com.depromeet.crackerbook.domain.book.Book;
-import com.depromeet.crackerbook.domain.book.QBook;
 import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.domain.book.dto.QBookSearchDto;
-import com.querydsl.core.QueryFactory;
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.util.StringUtils;
 
 import static com.depromeet.crackerbook.domain.book.QBook.book;
 

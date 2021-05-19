@@ -1,10 +1,12 @@
 package com.depromeet.crackerbook.controller.book;
 
+import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
+import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.book.BookService;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,12 +33,15 @@ public class BookController {
         if(results.isEmpty()){
             List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name);
             List<Book> kakaoBooks = kakaoResults.stream().map(result -> result.toEntity()).collect(Collectors.toList());
-            kakaoBooks.forEach(book -> System.out.println(book.toString()));
             bookService.saveKakaoSearchBook(kakaoBooks);
             results = bookService.findBookByName(name).getResults();
         }
 
-        var response = BookSearchResponse.of(results);
+        if(results.isEmpty()){
+            throw new NotFoundApiException(ErrorCode.INVALID_BOOK_KEYWORD);
+        }
+
+        var response = BookSearchResponse.from(results);
 
         return new SuccessResponse<>(response);
     }

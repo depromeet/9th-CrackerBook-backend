@@ -13,7 +13,7 @@ public class BookSearchResponse {
 
     private final List<BookSearchDto> bookSearchList;
 
-    public static BookSearchResponse of(List<BookSearchDto> bookSearchDtoList){
+    public static BookSearchResponse from(List<BookSearchDto> bookSearchDtoList){
         return new BookSearchResponse(bookSearchDtoList);
     }
 }
