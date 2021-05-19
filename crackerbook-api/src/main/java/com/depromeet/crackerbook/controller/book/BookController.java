@@ -1,18 +1,18 @@
 package com.depromeet.crackerbook.controller.book;
 
 import com.depromeet.crackerbook.controller.SuccessResponse;
-import com.depromeet.crackerbook.controller.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.domain.book.Book;
+import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.service.book.BookService;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,15 +26,19 @@ public class BookController {
     @GetMapping(value="", params="name")
     public SuccessResponse<BookSearchResponse> searchByName(@RequestParam("name") String name){
 
-        List<Book> searchResult = bookService.searchByName(name);
-        var response = searchResult.stream().map(entity -> BookSearchDto.from(entity)).collect(Collectors.toList());
-//        if(!searchResult.isEmpty()){
-//            var response =
-//        }
+        List<BookSearchDto> results = bookService.findBookByName(name).getResults();
 
+        if(results.isEmpty()){
+            List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name);
+            List<Book> kakaoBooks = kakaoResults.stream().map(result -> result.toEntity()).collect(Collectors.toList());
+            kakaoBooks.forEach(book -> System.out.println(book.toString()));
+            bookService.saveKakaoSearchBook(kakaoBooks);
+            results = bookService.findBookByName(name).getResults();
+        }
 
+        var response = BookSearchResponse.of(results);
 
-        return name;
+        return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "스터디 개설 시 책 저자로 조회")

@@ -1,8 +1,6 @@
-package com.depromeet.crackerbook.controller.book.dto;
+package com.depromeet.crackerbook.domain.book.dto;
 
-import com.depromeet.crackerbook.domain.book.Book;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

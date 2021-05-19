@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class KakaoService {
@@ -54,11 +56,10 @@ public class KakaoService {
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
 
-    public KakaoBookDto searchKakaoBookByTitle(String title){
+    public List<KakaoBookDto> searchKakaoBookByTitle(String title){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
-        KakaoSearchResponse<KakaoBookDto> test = kakaoBookClient.searchBook(clientId,"title", title);
-        System.out.println("57 " + test.getDocuments().get(0));
-        return new KakaoBookDto();
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"title", title);
+        return result.getDocuments();
     }
 
 //    public KakaoBookDto searchKakaoBookByAuthor(String author){
@@ -66,6 +67,4 @@ public class KakaoService {
 //            Map<String, String> test = kakaoBookClient.searchBook(clientId,"title", title);
 //        return kakaoBookClient.searchBook(author, "person", String.format("KakaoAK %s", kakaoClientId));
 //    }
-
-
 }
