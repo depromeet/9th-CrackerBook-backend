@@ -9,12 +9,12 @@ import java.util.List;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class StudyLikeListRepsonse {
+public class StudyLikeListResponse {
 
     private final long totalCount;
     private final List<StudyLikeDto> studyLikeList;
 
-    public static StudyLikeListRepsonse of(long total, List<StudyLikeDto> studyLikeDtoList) {
-        return new StudyLikeListRepsonse(total, studyLikeDtoList);
+    public static StudyLikeListResponse of(long total, List<StudyLikeDto> studyLikeDtoList) {
+        return new StudyLikeListResponse(total, studyLikeDtoList);
     }
 }
