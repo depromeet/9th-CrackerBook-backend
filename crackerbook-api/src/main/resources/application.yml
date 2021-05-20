@@ -10,3 +10,5 @@ spring:
         implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         default_batch_fetch_size: 100
+  jackson:
+    property-naming-strategy: SNAKE_CASE
