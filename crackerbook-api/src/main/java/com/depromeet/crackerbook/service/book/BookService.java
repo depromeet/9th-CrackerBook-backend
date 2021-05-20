@@ -10,17 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
 
-    @Transactional(readOnly = true)
     public QueryResults<BookSearchDto> findBookByName(String name){
         return bookRepository.findBookByName(name);
     }
 
+    @Transactional
     public void saveKakaoSearchBook(List<Book> kakaoSearchBooks){
         bookRepository.saveAll(kakaoSearchBooks);
     }

@@ -15,7 +15,7 @@ public enum ErrorCode {
     INVALID_USER("0101", "유효하지 않은 사용자입니다."),
 
     // BOOK[03xx]
-    INVALID_BOOK_KEYWORD("0301", "유효하지 않은 책 검색어입니다"),
+    INVALID_BOOK_KEYWORD("0301", "유효하지 않은 책 검색어입니다."),
 
     // COMMON [99xx]
     INVALID_INPUT_VALUE("9901", "유효하지 않은 값입니다."),

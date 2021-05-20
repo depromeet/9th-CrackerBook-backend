@@ -28,14 +28,14 @@ public class KakaoBookDto{
 
     private String publisher;
 
-//    private String[] translators; // 필요할까..?
-
     private String datetime;
+
     private int price;
     private int sale_price;
+
     private String thumbnail;
+    private String imageUrlSmall;
     private String imageUrlBig;
-    private String status;
 
     private void splitIsbn(String isbn){
         String[] isbns = isbn.split(" ");
@@ -50,7 +50,6 @@ public class KakaoBookDto{
 
 
     private void makeBigImageUrl(){
-        // http://image.kyobobook.co.kr/images/book/xlarge
         if(isbnLong == null) return;
         String imageUrl = String.format("http://image.kyobobook.co.kr/images/book/xlarge/%s/x%s.jpg", StringUtils.right(this.isbnLong,3), this.isbnLong);
         this.imageUrlBig = imageUrl;
@@ -59,6 +58,7 @@ public class KakaoBookDto{
     private void initialize(){
         this.splitIsbn(this.isbn);
         this.makeBigImageUrl();
+        this.imageUrlSmall = thumbnail;
     }
 
     public Book toEntity() {
