@@ -23,10 +23,9 @@ public class BookController {
     @GetMapping(params="name")
     public SuccessResponse<BookSearchResponse> searchByName(@RequestParam("name") String name){
 
-        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name);
-        if(kakaoResults.isEmpty()){
-            throw new NotFoundApiException(ErrorCode.INVALID_BOOK_KEYWORD);
-        }
+        List<KakaoBookDto> kakaoResults = kakaoService
+            .searchKakaoBookByTitle(name)
+            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD));
 
         var response = BookSearchResponse.from(kakaoResults);
         return new SuccessResponse<>(response);
@@ -34,10 +33,13 @@ public class BookController {
 
     @Operation(summary = "스터디 개설 시 책 저자로 조회")
     @GetMapping(params="author")
-    public String searchByAuthor(@RequestParam("author") String author){
+    public SuccessResponse<BookSearchResponse> searchByAuthor(@RequestParam("author") String author){
+        List<KakaoBookDto> kakaoResults = kakaoService
+            .searchKakaoBookByAuthor(author)
+            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD));
 
-        return "11";
-//        return new SuccessResponse<>(new BookSearchResponse());
+        var response = BookSearchResponse.from(kakaoResults);
+        return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "책 상세 조회")

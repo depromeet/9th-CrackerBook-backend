@@ -10,6 +10,8 @@ import com.depromeet.crackerbook.exception.BadRequestApiException;
 import com.depromeet.crackerbook.feign.KakaoApiClient;
 import com.depromeet.crackerbook.feign.KakaoAuthClient;
 import com.depromeet.crackerbook.feign.KakaoBookClient;
+import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +56,15 @@ public class KakaoService {
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
 
-    public List<KakaoBookDto> searchKakaoBookByTitle(String title){
+    public Optional<List<KakaoBookDto>> searchKakaoBookByTitle(String title){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"title", title);
-        return result.getDocuments();
+        return Optional.of(result.getDocuments());
     }
 
-//    public KakaoBookDto searchKakaoBookByAuthor(String author){
-//        String clientId = String.format("KakaoAK %s", kakaoClientId);
-//            Map<String, String> test = kakaoBookClient.searchBook(clientId,"title", title);
-//        return kakaoBookClient.searchBook(author, "person", String.format("KakaoAK %s", kakaoClientId));
-//    }
+    public Optional<List<KakaoBookDto>> searchKakaoBookByAuthor(String author){
+        String clientId = String.format("KakaoAK %s", kakaoClientId);
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"person", author);
+        return Optional.of(result.getDocuments());
+    }
 }
