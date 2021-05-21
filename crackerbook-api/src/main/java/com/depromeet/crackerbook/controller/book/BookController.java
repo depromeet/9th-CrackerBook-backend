@@ -4,10 +4,14 @@ import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
+import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
+import io.jsonwebtoken.lang.Collections;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,23 +26,35 @@ public class BookController {
     @Operation(summary = "스터디 개설 시 책 이름으로 조회")
     @GetMapping(params="name")
     public SuccessResponse<BookSearchResponse> searchByName(@RequestParam("name") String name){
+        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name);
+        if(CollectionUtils.isEmpty(kakaoResults)){
+            throw new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD);
+        }
 
-        List<KakaoBookDto> kakaoResults = kakaoService
-            .searchKakaoBookByTitle(name)
-            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD));
+        List<Book> bookResults = kakaoResults
+            .stream()
+            .map(result -> result.toEntity())
+            .collect(Collectors.toList());
 
-        var response = BookSearchResponse.from(kakaoResults);
+        var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "스터디 개설 시 책 저자로 조회")
     @GetMapping(params="author")
     public SuccessResponse<BookSearchResponse> searchByAuthor(@RequestParam("author") String author){
-        List<KakaoBookDto> kakaoResults = kakaoService
-            .searchKakaoBookByAuthor(author)
-            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD));
+        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByAuthor(author);
 
-        var response = BookSearchResponse.from(kakaoResults);
+        if(Collections.isEmpty(kakaoResults)){
+            throw new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD);
+        }
+
+        List<Book> bookResults = kakaoResults
+            .stream()
+            .map(result -> result.toEntity())
+            .collect(Collectors.toList());
+
+        var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
     }
 

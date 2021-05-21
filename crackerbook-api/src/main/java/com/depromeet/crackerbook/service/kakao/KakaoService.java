@@ -56,15 +56,15 @@ public class KakaoService {
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
 
-    public Optional<List<KakaoBookDto>> searchKakaoBookByTitle(String title){
+    public List<KakaoBookDto> searchKakaoBookByTitle(String title){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"title", title);
-        return Optional.of(result.getDocuments());
+        return result.getDocuments();
     }
 
-    public Optional<List<KakaoBookDto>> searchKakaoBookByAuthor(String author){
+    public List<KakaoBookDto> searchKakaoBookByAuthor(String author){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"person", author);
-        return Optional.of(result.getDocuments());
+        return result.getDocuments();
     }
 }

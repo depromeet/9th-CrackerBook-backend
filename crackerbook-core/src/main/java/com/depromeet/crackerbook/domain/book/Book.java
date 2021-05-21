@@ -33,18 +33,18 @@ public class Book extends BaseEntity {
 
     @Builder
     public Book(
-            String name
-            ,String contents
-            ,String isbnShort
-            ,String isbnLong
-            ,String authors
-            ,int price
-            ,int salePrice
-            ,String imageUrlSmall
-            ,String imageUrlBig ///602/x9788965402602.jpg
-            ,String publisher
-            ,LocalDateTime publishedAt
-            ){
+        String name
+        ,String contents
+        ,String isbnShort
+        ,String isbnLong
+        ,String authors
+        ,int price
+        ,int salePrice
+        ,String imageUrlSmall
+        ,String imageUrlBig ///602/x9788965402602.jpg
+        ,String publisher
+        ,LocalDateTime publishedAt
+    ){
         this.name = name;
         this.contents = contents;
         this.isbnShort = isbnShort;
