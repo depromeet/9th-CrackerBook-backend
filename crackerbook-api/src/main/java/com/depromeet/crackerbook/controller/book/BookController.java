@@ -9,8 +9,10 @@ import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
 import io.jsonwebtoken.lang.Collections;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,14 @@ public class BookController {
 
     @Operation(summary = "스터디 개설 시 책 이름으로 조회")
     @GetMapping(params="name")
-    public SuccessResponse<BookSearchResponse> searchByName(@RequestParam("name") String name){
-        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name);
+    public SuccessResponse<BookSearchResponse> searchByName(
+        @RequestParam String name,
+        @Parameter(description = "페이지", required = true) @RequestParam int page,
+        @Parameter(description = "개수", required = true) @RequestParam int size
+    ){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByTitle(name, pageRequest);
+
         if(CollectionUtils.isEmpty(kakaoResults)){
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD);
         }
@@ -42,8 +50,13 @@ public class BookController {
 
     @Operation(summary = "스터디 개설 시 책 저자로 조회")
     @GetMapping(params="author")
-    public SuccessResponse<BookSearchResponse> searchByAuthor(@RequestParam("author") String author){
-        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByAuthor(author);
+    public SuccessResponse<BookSearchResponse> searchByAuthor(
+        @RequestParam("author") String author,
+        @Parameter(description = "페이지", required = true) @RequestParam int page,
+        @Parameter(description = "개수", required = true) @RequestParam int size
+    ){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<KakaoBookDto> kakaoResults = kakaoService.searchKakaoBookByAuthor(author, pageRequest);
 
         if(Collections.isEmpty(kakaoResults)){
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD);

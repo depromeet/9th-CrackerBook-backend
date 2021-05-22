@@ -10,12 +10,10 @@ import com.depromeet.crackerbook.exception.BadRequestApiException;
 import com.depromeet.crackerbook.feign.KakaoApiClient;
 import com.depromeet.crackerbook.feign.KakaoAuthClient;
 import com.depromeet.crackerbook.feign.KakaoBookClient;
-import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,15 +54,27 @@ public class KakaoService {
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
 
-    public List<KakaoBookDto> searchKakaoBookByTitle(String title){
+    public List<KakaoBookDto> searchKakaoBookByTitle(String title, Pageable pageable){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
-        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"title", title);
+
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
+            .searchBook(clientId,"title", title, page, size);
+
         return result.getDocuments();
     }
 
-    public List<KakaoBookDto> searchKakaoBookByAuthor(String author){
+    public List<KakaoBookDto> searchKakaoBookByAuthor(String author, Pageable pageable){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
-        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"person", author);
+
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
+            .searchBook(clientId,"person", author, page, size);
+
         return result.getDocuments();
     }
 }
