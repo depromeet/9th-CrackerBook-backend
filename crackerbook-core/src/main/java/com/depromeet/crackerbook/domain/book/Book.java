@@ -2,6 +2,7 @@ package com.depromeet.crackerbook.domain.book;
 
 import com.depromeet.crackerbook.domain.BaseEntity;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Book extends BaseEntity {
 
@@ -31,8 +34,8 @@ public class Book extends BaseEntity {
     private String publisher;
     private LocalDateTime publishedAt;
 
-    @Builder
-    public Book(
+
+    public static BookBuilder builder(
         String name
         ,String contents
         ,String isbnShort
@@ -41,21 +44,26 @@ public class Book extends BaseEntity {
         ,int price
         ,int salePrice
         ,String imageUrlSmall
-        ,String imageUrlBig ///602/x9788965402602.jpg
+        ,String imageUrlBig
         ,String publisher
         ,LocalDateTime publishedAt
     ){
-        this.name = name;
-        this.contents = contents;
-        this.isbnShort = isbnShort;
-        this.isbnLong = isbnLong;
-        this.authors = authors;
-        this.price = price;
-        this.salePrice = salePrice;
-        this.imageUrlSmall = imageUrlSmall;
-        this.imageUrlBig = imageUrlBig;
-        this.publisher = publisher;
-        this.publishedAt = publishedAt;
+        return new BookBuilder()
+            .name(name)
+            .contents(contents)
+            .isbnShort(isbnShort)
+            .isbnLong(isbnLong)
+            .authors(authors)
+            .price(price)
+            .salePrice(salePrice)
+            .imageUrlSmall(imageUrlSmall)
+            .imageUrlBig(imageUrlBig)
+            .publisher(publisher)
+            .publishedAt(publishedAt);
+    }
 
+    public String getImageUrl(){
+        if(imageUrlBig == null) return imageUrlSmall;
+        return imageUrlBig;
     }
 }

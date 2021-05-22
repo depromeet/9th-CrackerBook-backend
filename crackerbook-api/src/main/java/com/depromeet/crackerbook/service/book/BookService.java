@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -22,7 +20,11 @@ public class BookService {
     }
 
     @Transactional
-    public void saveKakaoSearchBook(List<Book> kakaoSearchBooks){
-        bookRepository.saveAll(kakaoSearchBooks);
+    public Book saveKakaoSearchBook(Book kakaoSearchBook){
+        return bookRepository.save(kakaoSearchBook);
+    }
+
+    public BookSearchDto findBookByIsbn(String isbnLong, String isbnShort){
+        return bookRepository.findBookByIsbn(isbnLong, isbnShort);
     }
 }

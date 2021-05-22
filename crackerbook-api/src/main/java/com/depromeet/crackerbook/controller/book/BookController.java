@@ -5,12 +5,14 @@ import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.domain.book.Book;
+import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
+import com.depromeet.crackerbook.service.book.BookService;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
 import io.jsonwebtoken.lang.Collections;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +26,7 @@ import java.util.List;
 public class BookController {
 
     private final KakaoService kakaoService;
+    private final BookService bookService;
 
     @Operation(summary = "스터디 개설 시 책 이름으로 조회")
     @GetMapping(params="name")
@@ -39,10 +42,16 @@ public class BookController {
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD);
         }
 
-        List<Book> bookResults = kakaoResults
-            .stream()
-            .map(result -> result.toEntity())
-            .collect(Collectors.toList());
+        List<BookSearchDto> bookResults = new ArrayList<>();
+        for(KakaoBookDto kakaoBookDto : kakaoResults){
+            Book book = kakaoBookDto.toEntity();
+            BookSearchDto resultBook = bookService
+                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());
+            if(resultBook == null){
+                resultBook = BookSearchDto.from(bookService.saveKakaoSearchBook(book));
+            }
+            bookResults.add(resultBook);
+        }
 
         var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
@@ -62,10 +71,16 @@ public class BookController {
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD);
         }
 
-        List<Book> bookResults = kakaoResults
-            .stream()
-            .map(result -> result.toEntity())
-            .collect(Collectors.toList());
+        List<BookSearchDto> bookResults = new ArrayList<>();
+        for(KakaoBookDto kakaoBookDto : kakaoResults){
+            Book book = kakaoBookDto.toEntity();
+            BookSearchDto resultBook = bookService
+                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());
+            if(resultBook == null){
+                resultBook = BookSearchDto.from(bookService.saveKakaoSearchBook(book));
+            }
+            bookResults.add(resultBook);
+        }
 
         var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
