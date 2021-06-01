@@ -21,6 +21,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/users")
@@ -33,10 +35,10 @@ public class UserController {
 
     @Operation(summary = "카카오 로그인")
     @PostMapping("/sign-in/kakao")
-    public SuccessResponse<SignInKakaoResponse> signInKakao(@RequestBody SignInKakaoRequest dto) {
+    public SuccessResponse<SignInKakaoResponse> signInKakao(@RequestBody SignInKakaoRequest dto, HttpServletRequest request) {
         dto.validate();
 
-        KakaoUserDto kakaoUserDto = kakaoService.kakaoLogin(dto);
+        KakaoUserDto kakaoUserDto = kakaoService.kakaoLogin(dto, request.getHeader("origin"));
         User user = userService.signInKakao(kakaoUserDto);
 
         String email = user.getEmail();

@@ -10,11 +10,8 @@ import com.depromeet.crackerbook.exception.BadRequestApiException;
 import com.depromeet.crackerbook.feign.KakaoApiClient;
 import com.depromeet.crackerbook.feign.KakaoAuthClient;
 import com.depromeet.crackerbook.feign.KakaoBookClient;
-import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,21 +27,18 @@ public class KakaoService {
     @Value("${kakao.redirect-uri}")
     private String kakaoRedirectUri;
 
-    @Value("${frontend.domain}")
-    private String frontendDomain;
-
     private static final String GRANT_TYPE = "authorization_code";
 
     private final KakaoAuthClient kakaoAuthClient;
     private final KakaoApiClient kakaoApiClient;
     private final KakaoBookClient kakaoBookClient;
 
-    public KakaoUserDto kakaoLogin(SignInKakaoRequest dto) {
-        KakaoTokenDto kakaoToken = getKakaoToken(dto);
+    public KakaoUserDto kakaoLogin(SignInKakaoRequest dto, String frontendDomain) {
+        KakaoTokenDto kakaoToken = getKakaoToken(dto, frontendDomain);
         return getKakaoUser(kakaoToken.getAccess_token());
     }
 
-    private KakaoTokenDto getKakaoToken(SignInKakaoRequest dto) {
+    private KakaoTokenDto getKakaoToken(SignInKakaoRequest dto, String frontendDomain) {
         String redirectUri = frontendDomain + kakaoRedirectUri;
         return kakaoAuthClient.getKakaoToken(GRANT_TYPE, kakaoClientId, redirectUri, dto.getCode());
     }

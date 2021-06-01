@@ -26,10 +26,6 @@ springdoc:
   paths-to-match:
     - /api/**
 
-frontend:
-  # domain: http://localhost:3000
-  domain: https://develop.d2tw5qtwawbqat.amplifyapp.com
-
 kakao:
   client-id: 9f0d8ad0bfd2b1e186218619a5ef9d87
   redirect-uri: /callback/kakao
