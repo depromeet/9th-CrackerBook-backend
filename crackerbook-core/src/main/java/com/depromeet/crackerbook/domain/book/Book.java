@@ -63,7 +63,6 @@ public class Book extends BaseEntity {
     }
 
     public String getImageUrl(){
-        if(imageUrlBig == null) return imageUrlSmall;
-        return imageUrlBig;
+        return imageUrlBig == null ? imageUrlSmall : imageUrlBig;
     }
 }

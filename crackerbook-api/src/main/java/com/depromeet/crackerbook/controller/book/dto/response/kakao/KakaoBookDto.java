@@ -32,15 +32,15 @@ public class KakaoBookDto{
 
     private String thumbnail;
 
-    private String getImageUrlBig(){
+    public String getImageUrlBig(){
         return BookUtil.getImageUrlBig(isbn);
     }
 
-    private String getIsbnShort(){
+    public String getIsbnShort(){
         return BookUtil.getIsbnShort(isbn);
     }
 
-    private String getIsbnLong(){
+    public String getIsbnLong(){
         return BookUtil.getIsbnLong(isbn);
     }
 

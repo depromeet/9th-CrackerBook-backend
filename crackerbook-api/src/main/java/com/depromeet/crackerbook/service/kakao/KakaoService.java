@@ -1,6 +1,7 @@
 package com.depromeet.crackerbook.service.kakao;
 
 import com.depromeet.crackerbook.common.ErrorCode;
+import com.depromeet.crackerbook.common.SearchType;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoSearchResponse;
 import com.depromeet.crackerbook.controller.user.dto.KakaoTokenDto;
@@ -60,8 +61,10 @@ public class KakaoService {
         int page = pageable.getPageNumber();
         int size = pageable.getPageSize();
 
+        String target = SearchType.TITLE.getType();
+
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
-            .searchBook(clientId,"title", title, page, size);
+            .searchBook(clientId, target, title, page, size);
 
         return result.getDocuments();
     }
@@ -72,8 +75,10 @@ public class KakaoService {
         int page = pageable.getPageNumber();
         int size = pageable.getPageSize();
 
+        String target = SearchType.AUTHOR.getType();
+
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
-            .searchBook(clientId,"person", author, page, size);
+            .searchBook(clientId, target, author, page, size);
 
         return result.getDocuments();
     }

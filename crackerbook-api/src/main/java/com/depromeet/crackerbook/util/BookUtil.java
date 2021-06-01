@@ -31,8 +31,4 @@ public class BookUtil {
         String imageUrl = String.format(BASE_BIG_IMAGE_URL_FORMAT, lastPart, isbnLong);
         return imageUrl;
     }
-
-
-
-
 }

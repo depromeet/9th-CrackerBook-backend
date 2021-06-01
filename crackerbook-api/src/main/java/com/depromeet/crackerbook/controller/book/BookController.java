@@ -4,7 +4,6 @@ import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
-import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.book.BookService;
@@ -12,7 +11,6 @@ import com.depromeet.crackerbook.service.kakao.KakaoService;
 import io.jsonwebtoken.lang.Collections;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
@@ -42,16 +40,7 @@ public class BookController {
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_NAME_KEYWORD);
         }
 
-        List<BookSearchDto> bookResults = new ArrayList<>();
-        for(KakaoBookDto kakaoBookDto : kakaoResults){
-            Book book = kakaoBookDto.toEntity();
-            BookSearchDto resultBook = bookService
-                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());
-            if(resultBook == null){
-                resultBook = BookSearchDto.from(bookService.saveKakaoSearchBook(book));
-            }
-            bookResults.add(resultBook);
-        }
+        List<BookSearchDto> bookResults = bookService.findOrSaveBooks(kakaoResults);
 
         var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
@@ -71,16 +60,7 @@ public class BookController {
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_AUTHOR_KEYWORD);
         }
 
-        List<BookSearchDto> bookResults = new ArrayList<>();
-        for(KakaoBookDto kakaoBookDto : kakaoResults){
-            Book book = kakaoBookDto.toEntity();
-            BookSearchDto resultBook = bookService
-                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());
-            if(resultBook == null){
-                resultBook = BookSearchDto.from(bookService.saveKakaoSearchBook(book));
-            }
-            bookResults.add(resultBook);
-        }
+        List<BookSearchDto> bookResults = bookService.findOrSaveBooks(kakaoResults);
 
         var response = BookSearchResponse.from(bookResults);
         return new SuccessResponse<>(response);
@@ -90,14 +70,5 @@ public class BookController {
     @GetMapping("/{bookId}")
     public Long getBookInfo(@PathVariable Long bookId){
         return bookId;
-    }
-
-    @Operation(summary = "책 검색")
-    @GetMapping(params={ "keyword", "type" })
-    public String searchBook(
-            @RequestParam("keyword") String keyword,
-            @RequestParam("type") String type
-    ){
-        return keyword+" "+type;
     }
 }
