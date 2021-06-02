@@ -14,6 +14,7 @@ public interface KakaoBookClient {
             @RequestParam("target") String target,
             @RequestParam("query") String query,
             @RequestParam("page") int page,
-            @RequestParam("size") int size
+            @RequestParam("size") int size,
+            @RequestParam(value="sort", defaultValue="latest") String sort
     );
 }

@@ -62,9 +62,10 @@ public class KakaoService {
         int size = pageable.getPageSize();
 
         String target = SearchType.TITLE.getType();
+        String sort = SearchType.LATEST.getType();
 
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
-            .searchBook(clientId, target, title, page, size);
+            .searchBook(clientId, target, title, page, size, sort);
 
         return result.getDocuments();
     }
@@ -76,9 +77,10 @@ public class KakaoService {
         int size = pageable.getPageSize();
 
         String target = SearchType.AUTHOR.getType();
+        String sort = SearchType.LATEST.getType();
 
         KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
-            .searchBook(clientId, target, author, page, size);
+            .searchBook(clientId, target, author, page, size, sort);
 
         return result.getDocuments();
     }

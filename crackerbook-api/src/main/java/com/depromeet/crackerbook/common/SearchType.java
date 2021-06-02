@@ -9,6 +9,7 @@ public enum SearchType {
 
     TITLE("title")
     , AUTHOR("person")
+    , LATEST("latest")
     ;
 
     private final String type;

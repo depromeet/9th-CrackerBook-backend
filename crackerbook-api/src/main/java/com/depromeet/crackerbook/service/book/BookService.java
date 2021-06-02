@@ -18,13 +18,19 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
+    @Transactional
     public List<BookSearchDto> findOrSaveBooks(List<KakaoBookDto> kakaoResults){
         List<BookSearchDto> bookResults = new ArrayList<>();
         for(KakaoBookDto kakaoBookDto : kakaoResults){
             Book book = kakaoBookDto.toEntity();
+
             BookSearchDto resultBook = bookRepository
-                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort())
-                .orElseGet(() -> BookSearchDto.from(saveKakaoSearchBook(book)));
+                .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());
+
+            if(resultBook == null){
+                resultBook = BookSearchDto.from(saveKakaoSearchBook(book));
+            }
+
             bookResults.add(resultBook);
         }
         return bookResults;

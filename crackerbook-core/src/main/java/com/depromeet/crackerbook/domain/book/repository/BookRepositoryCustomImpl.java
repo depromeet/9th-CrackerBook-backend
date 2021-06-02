@@ -39,23 +39,21 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
     }
 
     @Override
-    public Optional<BookSearchDto> findBookByIsbn(String isbnLong, String isbnShort) {
-        return Optional.ofNullable(
-            queryFactory
-                .select(new QBookSearchDto(
-                    book.bookId,
-                    book.name,
-                    book.imageUrlBig.coalesce(book.imageUrlSmall),
-                    book.publisher,
-                    book.authors,
-                    book.isbnLong,
-                    book.isbnShort,
-                    book.publishedAt
-                ))
-                .from(book)
-                .where(isbnLongEq(isbnLong), isbnShortEq(isbnShort))
-                .fetchOne()
-        );
+    public BookSearchDto findBookByIsbn(String isbnLong, String isbnShort) {
+        return queryFactory
+            .select(new QBookSearchDto(
+                book.bookId,
+                book.name,
+                book.imageUrlBig.coalesce(book.imageUrlSmall),
+                book.publisher,
+                book.authors,
+                book.isbnLong,
+                book.isbnShort,
+                book.publishedAt
+            ))
+            .from(book)
+            .where(isbnLongEq(isbnLong), isbnShortEq(isbnShort))
+            .fetchOne();
     }
 
     private BooleanExpression isbnLongEq(String isbnLong) {
