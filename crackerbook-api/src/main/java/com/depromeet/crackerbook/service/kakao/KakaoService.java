@@ -1,6 +1,7 @@
 package com.depromeet.crackerbook.service.kakao;
 
 import com.depromeet.crackerbook.common.ErrorCode;
+import com.depromeet.crackerbook.common.SearchType;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoSearchResponse;
 import com.depromeet.crackerbook.controller.user.dto.KakaoTokenDto;
@@ -13,6 +14,7 @@ import com.depromeet.crackerbook.feign.KakaoBookClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,15 +52,33 @@ public class KakaoService {
         return kakaoApiClient.getKakaoUser(String.format("Bearer %s", accessToken));
     }
 
-    public List<KakaoBookDto> searchKakaoBookByTitle(String title){
+    public List<KakaoBookDto> searchKakaoBookByTitle(String title, Pageable pageable){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
-        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"title", title);
+
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
+        String target = SearchType.TITLE.getType();
+        String sort = SearchType.LATEST.getType();
+
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
+            .searchBook(clientId, target, title, page, size, sort);
+
         return result.getDocuments();
     }
 
-    public List<KakaoBookDto> searchKakaoBookByAuthor(String author){
+    public List<KakaoBookDto> searchKakaoBookByAuthor(String author, Pageable pageable){
         String clientId = String.format("KakaoAK %s", kakaoClientId);
-        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient.searchBook(clientId,"person", author);
+
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
+        String target = SearchType.AUTHOR.getType();
+        String sort = SearchType.LATEST.getType();
+
+        KakaoSearchResponse<KakaoBookDto> result = kakaoBookClient
+            .searchBook(clientId, target, author, page, size, sort);
+
         return result.getDocuments();
     }
 }

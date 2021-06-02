@@ -12,7 +12,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-@ToString
 public class KakaoBookDto{
     private String title;
     private String contents;
@@ -32,31 +31,31 @@ public class KakaoBookDto{
 
     private String thumbnail;
 
-    private String getImageUrlBig(){
+    public String getImageUrlBig(){
         return BookUtil.getImageUrlBig(isbn);
     }
 
-    private String getIsbnShort(){
+    public String getIsbnShort(){
         return BookUtil.getIsbnShort(isbn);
     }
 
-    private String getIsbnLong(){
+    public String getIsbnLong(){
         return BookUtil.getIsbnLong(isbn);
     }
 
     public Book toEntity() {
-        return Book.builder()
-                .name(title)
-                .contents(contents)
-                .isbnShort(getIsbnShort())
-                .isbnLong(getIsbnLong())
-                .authors(authors.stream().collect(Collectors.joining(",")))
-                .price(price)
-                .salePrice(sale_price)
-                .imageUrlSmall(thumbnail)
-                .imageUrlBig(getImageUrlBig())
-                .publisher(publisher)
-                .publishedAt(LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("Asia/Seoul"))))
-                .build();
+        return Book.builder(
+            title
+            ,contents
+            ,getIsbnShort()
+            ,getIsbnLong()
+            ,authors.stream().collect(Collectors.joining(","))
+            ,price
+            ,sale_price
+            ,thumbnail
+            ,getImageUrlBig()
+            ,publisher
+            ,LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("Asia/Seoul")))
+        ).build();
     }
 }

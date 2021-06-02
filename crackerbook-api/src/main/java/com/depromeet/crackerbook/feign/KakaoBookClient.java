@@ -12,6 +12,9 @@ public interface KakaoBookClient {
     KakaoSearchResponse<KakaoBookDto> searchBook(
             @RequestHeader("Authorization") String accessToken,
             @RequestParam("target") String target,
-            @RequestParam("query") String query
+            @RequestParam("query") String query,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam(value="sort", defaultValue="latest") String sort
     );
 }

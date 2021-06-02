@@ -1,7 +1,6 @@
 package com.depromeet.crackerbook.controller.book.dto.response;
 
-import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
-import com.depromeet.crackerbook.domain.book.Book;
+import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +11,9 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookSearchResponse {
 
-    private final List<Book> bookSearchList;
+    private final List<BookSearchDto> bookSearchList;
 
-    public static BookSearchResponse from(List<Book> bookSearchDtoList){
+    public static BookSearchResponse from(List<BookSearchDto> bookSearchDtoList){
         return new BookSearchResponse(bookSearchDtoList);
     }
 }

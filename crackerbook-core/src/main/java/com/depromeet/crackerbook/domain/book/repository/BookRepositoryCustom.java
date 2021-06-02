@@ -5,4 +5,5 @@ import com.querydsl.core.QueryResults;
 
 public interface BookRepositoryCustom {
     QueryResults<BookSearchDto> findBookByName(String name);
+    BookSearchDto findBookByIsbn(String isbnLong, String isbnShort);
 }
