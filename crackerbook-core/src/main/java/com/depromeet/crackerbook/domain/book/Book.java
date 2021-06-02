@@ -16,7 +16,6 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Book extends BaseEntity {
 
     @Id

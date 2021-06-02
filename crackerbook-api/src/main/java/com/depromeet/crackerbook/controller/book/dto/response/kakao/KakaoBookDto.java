@@ -12,7 +12,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-@ToString
 public class KakaoBookDto{
     private String title;
     private String contents;

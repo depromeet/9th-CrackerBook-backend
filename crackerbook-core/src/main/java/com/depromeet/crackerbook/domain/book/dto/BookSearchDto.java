@@ -11,7 +11,6 @@ import lombok.ToString;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
 public class BookSearchDto {
     private Long id;
     private String name;
