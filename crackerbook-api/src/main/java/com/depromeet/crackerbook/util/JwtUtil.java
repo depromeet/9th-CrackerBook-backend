@@ -1,6 +1,7 @@
 package com.depromeet.crackerbook.util;
 
 import com.depromeet.crackerbook.config.auth.TokenType;
+import com.depromeet.crackerbook.domain.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,6 +22,10 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public static Long extractUserId(String token) {
+        return token != null ? extractClaim(token, claims -> claims.get("userId", Long.class)) : null;
+    }
+
     public static Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
@@ -37,9 +42,11 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public static String generateToken(UserDetails userDetails, TokenType tokenType) {
+    public static String generateToken(User user, TokenType tokenType) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername(), tokenType.getExpiration());
+        claims.put("userId", user.getUserId());
+
+        return createToken(claims, user.getEmail(), tokenType.getExpiration());
     }
 
     private static String createToken(Map<String, Object> claims, String subject, long expiration) {
