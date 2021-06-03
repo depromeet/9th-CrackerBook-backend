@@ -1,5 +1,6 @@
 package com.depromeet.crackerbook.controller.user;
 
+import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.config.auth.UserDetailsServiceImpl;
 import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.user.dto.KakaoUserDto;
@@ -10,15 +11,16 @@ import com.depromeet.crackerbook.controller.user.dto.response.StudyLikeListRespo
 import com.depromeet.crackerbook.controller.user.dto.response.UserResponse;
 import com.depromeet.crackerbook.domain.study.dto.StudyLikeDto;
 import com.depromeet.crackerbook.domain.user.User;
+import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.kakao.KakaoService;
 import com.depromeet.crackerbook.service.study.StudyLikeService;
 import com.depromeet.crackerbook.service.user.UserService;
+import com.depromeet.crackerbook.util.RequestUtil;
 import com.querydsl.core.QueryResults;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +45,9 @@ public class UserController {
 
         String email = user.getEmail();
         userService.authenticate(email);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        userDetailsService.loadUserByUsername(email);
 
-        String accessToken = userService.updateToken(user, userDetails);
+        String accessToken = userService.updateToken(user);
         var response = SignInKakaoResponse.from(accessToken);
 
         return new SuccessResponse<>(response);
@@ -69,13 +71,18 @@ public class UserController {
         return new SuccessResponse<>(response);
     }
 
-    @Operation(summary = "관심 스터디 목록 조회")
-    @GetMapping("/{userId}/like/studies")
-    public SuccessResponse<StudyLikeListResponse> getStudyLikeList(
-            @PathVariable Long userId
+    @Operation(summary = "나의 관심 스터디 목록 조회")
+    @GetMapping("/me/like/studies")
+    public SuccessResponse<StudyLikeListResponse> getMyStudyLikeList(
+            HttpServletRequest request
             , @Parameter(description = "페이지", required = true) @RequestParam int page
             , @Parameter(description = "개수", required = true) @RequestParam int size
     ) {
+        Long userId = RequestUtil.getUserId(request);
+        if (userId == null) {
+            throw new NotFoundApiException(ErrorCode.INVALID_USER);
+        }
+
         PageRequest pageRequest = PageRequest.of(page, size);
         QueryResults<StudyLikeDto> results = studyLikeService.getStudyLikeList(userId, pageRequest);
         var response = StudyLikeListResponse.of(results.getTotal(), results.getResults());

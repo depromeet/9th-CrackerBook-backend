@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,10 +36,10 @@ public class UserService {
     }
 
     @Transactional
-    public String updateToken(User user, UserDetails userDetails) {
+    public String updateToken(User user) {
         return user.updateToken(
-                JwtUtil.generateToken(userDetails, TokenType.ACCESS_TOKEN),
-                JwtUtil.generateToken(userDetails, TokenType.REFRESH_TOKEN));
+                JwtUtil.generateToken(user, TokenType.ACCESS_TOKEN),
+                JwtUtil.generateToken(user, TokenType.REFRESH_TOKEN));
     }
 
     public User findUserById(Long userId) {
