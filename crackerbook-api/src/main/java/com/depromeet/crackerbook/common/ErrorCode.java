@@ -20,6 +20,7 @@ public enum ErrorCode {
     // BOOK[03xx]
     INVALID_BOOK_NAME_KEYWORD("0301", "유효하지 않은 책 이름 입니다."),
     INVALID_BOOK_AUTHOR_KEYWORD("0302", "유효하지 않은 작가 이름 입니다."),
+    INVALID_BOOK("0303", "등록되지 않은 책 입니다."),
 
     // COMMON [99xx]
     INVALID_INPUT_VALUE("9901", "유효하지 않은 값입니다."),

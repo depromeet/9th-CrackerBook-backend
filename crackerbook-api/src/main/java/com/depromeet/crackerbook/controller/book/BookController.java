@@ -2,8 +2,10 @@ package com.depromeet.crackerbook.controller.book;
 
 import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.controller.SuccessResponse;
+import com.depromeet.crackerbook.controller.book.dto.BookResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
+import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.domain.book.dto.BookSearchDto;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.service.book.BookService;
@@ -68,7 +70,11 @@ public class BookController {
 
     @Operation(summary = "책 상세 조회")
     @GetMapping("/{bookId}")
-    public Long getBookInfo(@PathVariable Long bookId){
-        return bookId;
+    public SuccessResponse<BookResponse> getBookInfo(@PathVariable Long bookId){
+
+        Book book = bookService.findBookById(bookId);
+        var response = BookResponse.from(book);
+
+        return new SuccessResponse<>(response);
     }
 }
