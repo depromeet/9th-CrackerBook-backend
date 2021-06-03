@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // API
             "/api/v1/users/sign-in/kakao",
             "/api/v1/books",
+            "/api/v1/books/**",
 
             "/api/v1/studies/**",
             // ETC
