@@ -5,7 +5,6 @@ import com.depromeet.crackerbook.util.BookUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
