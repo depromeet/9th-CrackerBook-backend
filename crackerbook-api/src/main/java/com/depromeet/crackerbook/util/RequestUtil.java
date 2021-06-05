@@ -1,5 +1,7 @@
 package com.depromeet.crackerbook.util;
 
+import com.depromeet.crackerbook.common.ErrorCode;
+import com.depromeet.crackerbook.exception.NotFoundApiException;
 import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,12 @@ public class RequestUtil {
 
     public static Long getUserId(HttpServletRequest request) {
         String accessToken = getAccessToken(request);
-        return JwtUtil.extractUserId(accessToken);
+        Long userId = JwtUtil.extractUserId(accessToken);
+
+        if (userId == null) {
+            throw new NotFoundApiException(ErrorCode.INVALID_USER);
+        }
+        return userId;
     }
 
     private String getAccessToken(HttpServletRequest request) {
