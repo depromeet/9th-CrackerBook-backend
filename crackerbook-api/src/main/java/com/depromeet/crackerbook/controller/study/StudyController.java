@@ -3,14 +3,20 @@ package com.depromeet.crackerbook.controller.study;
 import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.study.dto.request.CreateStudyRequest;
 import com.depromeet.crackerbook.controller.study.dto.request.UpdateStudyRequest;
+import com.depromeet.crackerbook.controller.study.dto.response.ApplyStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.CreateStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.GetStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.UpdateStudyResponse;
+import com.depromeet.crackerbook.domain.participant.Participant;
 import com.depromeet.crackerbook.domain.study.Study;
+import com.depromeet.crackerbook.service.participant.ParticipantService;
 import com.depromeet.crackerbook.service.study.StudyService;
+import com.depromeet.crackerbook.util.RequestUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudyController {
 
     private final StudyService studyService;
+    private final ParticipantService participantService;
 
     @Operation(summary = "스터디 조회")
     @GetMapping("/{studyId}")
@@ -50,19 +57,27 @@ public class StudyController {
         return new SuccessResponse<>(UpdateStudyResponse.from(study.getStudyId()));
     }
 
-//    @DeleteMapping("/{studyId}")
-//    public String deleteStudy(@PathVariable String studyId) {
-//
-//    }
-//
-//
-//    @PostMapping("/studies/{studyId}/apply")
-//    public String applyStudy(@PathVariable String studyId) {
-//
-//    }
-//
-//    @PutMapping("/studies/{studyId}/apply")
-//    public String cancelApplyStudy(@PathVariable String studyId) {
-//
-//    }
+    //    @DeleteMapping("/{studyId}")
+    //    public String deleteStudy(@PathVariable String studyId) {
+    //
+    //    }
+    //
+
+    @PostMapping("/studies/{studyId}/apply")
+    public SuccessResponse<ApplyStudyResponse> applyStudy(
+            HttpServletRequest request
+            , @PathVariable Long studyId
+    ) {
+        Long userId = RequestUtil.getUserId(request);
+
+        Participant participant = participantService.applyParticipant(studyId, userId);
+
+        return new SuccessResponse<>(ApplyStudyResponse.of(participant.getParticipantId()));
+    }
+
+    @DeleteMapping("/studies/{studyId}/apply")
+    public String cancelApplyStudy(@PathVariable String studyId) {
+
+        return "123";
+    }
 }
