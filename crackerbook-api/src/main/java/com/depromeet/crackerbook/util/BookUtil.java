@@ -40,15 +40,14 @@ public class BookUtil {
             HttpURLConnection con = (HttpURLConnection) imageUrl.openConnection();
             con.setRequestMethod("GET");
 
-            System.out.println(con.getResponseCode());
-
-            if(con.getResponseCode() == 200)
+            if(con.getResponseCode() == 200){
                 isValid = true;
+            }
 
-        }catch(MalformedURLException ex){
-            ex.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch(MalformedURLException me){
+            me.printStackTrace();
+        }catch(IOException ie) {
+            ie.printStackTrace();
         }
 
         return isValid;
