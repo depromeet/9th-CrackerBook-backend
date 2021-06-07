@@ -23,7 +23,7 @@ public class BookService {
     public List<BookSearchDto> findOrSaveBooks(List<KakaoBookDto> kakaoResults){
         List<BookSearchDto> bookResults = new ArrayList<>();
         for(KakaoBookDto kakaoBookDto : kakaoResults){
-            Book book = kakaoBookDto.toEntity();
+            Book book = kakaoBookDto.toBook();
 
             BookSearchDto resultBook = bookRepository
                 .findBookByIsbn(book.getIsbnLong(), book.getIsbnShort());

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 
+@UtilityClass
 public class BookUtil {
     public static final String BASE_XLarge_IMAGE_URL_FORMAT = "http://image.kyobobook.co.kr/images/book/xlarge/%s/x%s.jpg";
     public static final String BASE_Large_IMAGE_URL_FORMAT = "http://image.kyobobook.co.kr/images/book/large/%s/l%s.jpg";
