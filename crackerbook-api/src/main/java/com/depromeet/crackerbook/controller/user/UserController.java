@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,7 +51,7 @@ public class UserController {
         userDetailsService.loadUserByUsername(email);
 
         String accessToken = userService.updateToken(user);
-        var response = SignInKakaoResponse.from(accessToken);
+        var response = SignInKakaoResponse.of(accessToken);
 
         return new SuccessResponse<>(response);
     }
@@ -59,16 +60,21 @@ public class UserController {
     @GetMapping("/{userId}")
     public SuccessResponse<UserResponse> getUserInfo(@PathVariable Long userId) {
         User user = userService.findUserById(userId);
-        var response = UserResponse.from(user);
+        var response = UserResponse.of(user);
 
         return new SuccessResponse<>(response);
     }
 
     @Operation(summary = "사용자 정보 수정")
-    @PutMapping("/{userId}")
-    public SuccessResponse<UserResponse> updateUserInfo(@PathVariable Long userId, @RequestBody UpdateUserInfoRequest dto) {
+    @PutMapping("/me")
+    public SuccessResponse<UserResponse> updateUserInfo(
+            HttpServletRequest request
+            , @RequestBody @Valid UpdateUserInfoRequest dto
+    ) {
+        Long userId = RequestUtil.getUserId(request);
+
         User user = userService.updateUser(userId, dto);
-        var response = UserResponse.from(user);
+        var response = UserResponse.of(user);
 
         return new SuccessResponse<>(response);
     }

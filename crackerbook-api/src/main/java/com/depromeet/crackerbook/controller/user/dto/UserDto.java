@@ -14,7 +14,7 @@ public class UserDto {
     private final String imageUrl;
     private final String introduce;
 
-    public static UserDto from(User user) {
+    public static UserDto of(User user) {
         return new UserDto(
                 user.getEmail()
                 , user.getNickname()
