@@ -3,6 +3,8 @@ package com.depromeet.crackerbook.controller.book.dto.response.kakao;
 import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.util.BookUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
@@ -13,7 +15,8 @@ import java.time.format.DateTimeFormatter;
 import org.apache.commons.text.StringEscapeUtils;
 
 @Getter
-public class KakaoBookDto{
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class KakaoBookDto {
     private String title;
     private String contents;
 
@@ -29,7 +32,6 @@ public class KakaoBookDto{
 
     private int price;
 
-    @JsonProperty("sale_price")
     private int salePrice;
 
     private String thumbnail;
