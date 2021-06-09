@@ -10,10 +10,10 @@ public class UserResponse {
     private final UserDto user;
 
     private UserResponse(User user) {
-        this.user = UserDto.from(user);
+        this.user = UserDto.of(user);
     }
 
-    public static UserResponse from(User user) {
+    public static UserResponse of(User user) {
         return new UserResponse(user);
     }
 }
