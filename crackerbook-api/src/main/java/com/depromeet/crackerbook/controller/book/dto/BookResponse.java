@@ -11,7 +11,7 @@ public class BookResponse {
 
     private final Book book;
 
-    public static BookResponse from(Book book){
+    public static BookResponse of(Book book){
         return new BookResponse(book);
     }
 }

@@ -1,5 +1,7 @@
 package com.depromeet.crackerbook.domain.book.repository;
 
+import com.depromeet.crackerbook.domain.book.BookLike;
+import com.depromeet.crackerbook.domain.book.QBookLike;
 import com.depromeet.crackerbook.domain.book.dto.BookLikeDto;
 import com.depromeet.crackerbook.domain.book.dto.QBookLikeDto;
 import com.querydsl.core.QueryResults;
@@ -37,6 +39,15 @@ public class BookLikeRepositoryCustomImpl implements BookLikeRepositoryCustom {
                 .orderBy(bookLike.createdAt.desc())
                 .fetchResults();
     }
+
+//    @Override
+//    public Long addMyBookLike(Long userId, Long bookId) {
+//        return queryFactory
+//            .insert(bookLike)
+//            .columns(bookLike.user.userId, bookLike.bookLikeId)
+//            .values(userId, bookId)
+//            .execute();
+//    }
 
     private BooleanExpression userIdEq(Long userId) {
         return bookLike.user.userId.eq(userId);
