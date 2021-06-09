@@ -2,17 +2,21 @@ package com.depromeet.crackerbook.controller.book.dto.response.kakao;
 
 import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.util.BookUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import org.apache.commons.text.StringEscapeUtils;
 
 @Getter
-public class KakaoBookDto{
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class KakaoBookDto {
     private String title;
     private String contents;
 
@@ -27,13 +31,18 @@ public class KakaoBookDto{
     private String datetime;
 
     private int price;
-    private int sale_price;
+
+    private int salePrice;
 
     private String thumbnail;
 
     public String getImageUrlBig(){
         return BookUtil.getImageUrlBig(isbn);
     }
+
+    public String getTitle(){ return escapeString(title); }
+
+    public String getContent(){ return escapeString(contents); }
 
     public String getIsbnShort(){
         return BookUtil.getIsbnShort(isbn);
@@ -43,19 +52,34 @@ public class KakaoBookDto{
         return BookUtil.getIsbnLong(isbn);
     }
 
-    public Book toEntity() {
+    public String getAuthors(){
+        String author = authors.stream().collect(Collectors.joining(","));
+        return escapeString(author);
+    }
+
+    public LocalDateTime getPublishedAt(){
+        return LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("Asia/Seoul")));
+    }
+
+    public String getPublisher(){ return escapeString(publisher); }
+
+    public Book toBook() {
         return Book.builder(
-            title
-            ,contents
+            getTitle()
+            ,getContent()
             ,getIsbnShort()
             ,getIsbnLong()
-            ,authors.stream().collect(Collectors.joining(","))
+            ,getAuthors()
             ,price
-            ,sale_price
+            ,salePrice
             ,thumbnail
             ,getImageUrlBig()
-            ,publisher
-            ,LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("Asia/Seoul")))
+            ,getPublisher()
+            ,getPublishedAt()
         ).build();
+    }
+
+    private String escapeString(String input){
+        return StringEscapeUtils.unescapeHtml4(input); // escaping 되지 않은 HTML 처리
     }
 }

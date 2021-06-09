@@ -8,7 +8,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import static com.depromeet.crackerbook.domain.book.QBook.book;
 
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.springframework.util.ObjectUtils;
 
