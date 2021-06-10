@@ -25,19 +25,19 @@ public class BookLikeRepositoryCustomImpl implements BookLikeRepositoryCustom {
     @Override
     public QueryResults<BookLikeDto> getBookLikeList(Long userId, Pageable pageable) {
         return queryFactory
-                .select(new QBookLikeDto(
-                        book.bookId
-                        , book.name
-                        , book.imageUrlBig
-                        , book.authors
-                ))
-                .from(bookLike)
-                .innerJoin(bookLike.book, book)
-                .where(userIdEq(userId))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(bookLike.createdAt.desc())
-                .fetchResults();
+            .select(new QBookLikeDto(
+                book.bookId
+                , book.name
+                , book.imageUrlBig
+                , book.authors
+            ))
+            .from(bookLike)
+            .innerJoin(bookLike.book, book)
+            .where(userIdEq(userId))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .orderBy(bookLike.createdAt.desc())
+            .fetchResults();
     }
 
     @Override
