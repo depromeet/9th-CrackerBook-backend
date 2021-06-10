@@ -46,9 +46,6 @@ public class BookLikeRepositoryCustomImpl implements BookLikeRepositoryCustom {
             .selectFrom(bookLike)
             .where(userIdEq(userId).and(bookIdEq(bookId)))
             .fetchOne();
-//            .from(bookLike)
-//            .where(userIdEq(userId).and(bookIdEq(bookId)))
-//            .fetchOne();
     }
 
     private BooleanExpression userIdEq(Long userId) {
