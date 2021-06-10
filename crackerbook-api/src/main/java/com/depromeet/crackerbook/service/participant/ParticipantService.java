@@ -28,11 +28,20 @@ public class ParticipantService {
                 .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
 
         Participant participant = Participant.CreateParticipant(
-                study.getStudyId(),
-                user.getUserId()
+                user,
+                study
         );
 
         participantRepository.save(participant);
         return participant;
+    }
+
+    public Participant cancelParticipant(Long studyId, Long userId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_STUDY));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
+
     }
 }

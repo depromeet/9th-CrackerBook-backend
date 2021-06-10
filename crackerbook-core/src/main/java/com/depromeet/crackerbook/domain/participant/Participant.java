@@ -20,8 +20,6 @@ public class Participant extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "participant_id")
     private Long participantId;
-    private Long userId;
-    private Long studyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -32,13 +30,20 @@ public class Participant extends BaseEntity {
     private Study study;
 
     public static Participant CreateParticipant(
+            User user
+            , Study study
+    ) {
+        return new ParticipantBuilder()
+                .user(user)
+                .study(study)
+                .build()
+                ;
+    }
+
+    public static Participant CancelParticipant(
             Long userId
             , Long studyId
     ) {
-        return new ParticipantBuilder()
-                .userId(userId)
-                .studyId(studyId)
-                .build()
-        ;
+
     }
 }

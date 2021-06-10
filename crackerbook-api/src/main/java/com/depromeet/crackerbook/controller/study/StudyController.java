@@ -76,7 +76,14 @@ public class StudyController {
     }
 
     @DeleteMapping("/studies/{studyId}/apply")
-    public String cancelApplyStudy(@PathVariable String studyId) {
+    public String cancelApplyStudy(
+            HttpServletRequest request
+            , @PathVariable Long studyId
+    ) {
+        Long userId = RequestUtil.getUserId(request);
+
+
+//        Participant participant = participantService.applyParticipant(studyId, userId);
 
         return "123";
     }
