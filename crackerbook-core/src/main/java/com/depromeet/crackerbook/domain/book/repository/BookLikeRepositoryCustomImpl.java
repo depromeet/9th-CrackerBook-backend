@@ -40,16 +40,20 @@ public class BookLikeRepositoryCustomImpl implements BookLikeRepositoryCustom {
                 .fetchResults();
     }
 
-//    @Override
-//    public Long addMyBookLike(Long userId, Long bookId) {
-//        return queryFactory
-//            .insert(bookLike)
-//            .columns(bookLike.user.userId, bookLike.bookLikeId)
-//            .values(userId, bookId)
-//            .execute();
-//    }
+    @Override
+    public Long getBookLikeId(Long userId, Long bookId) {
+        return queryFactory
+            .select(bookLike.bookLikeId)
+            .from(bookLike)
+            .where(userIdEq(userId).and(bookIdEq(bookId)))
+            .fetchOne();
+    }
 
     private BooleanExpression userIdEq(Long userId) {
         return bookLike.user.userId.eq(userId);
+    }
+
+    private BooleanExpression bookIdEq(Long bookId){
+        return bookLike.book.bookId.eq(bookId);
     }
 }

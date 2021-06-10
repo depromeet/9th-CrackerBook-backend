@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class AddMyBookLikeResponse {
 
-    private final BookLike bookLike;
+    private final Long bookLikeId;
 
-    private AddMyBookLikeResponse(BookLike bookLike){
-        this.bookLike = bookLike;
+    private AddMyBookLikeResponse(Long bookLike){
+        this.bookLikeId = bookLike;
     }
 
     public static AddMyBookLikeResponse of(BookLike bookLike){
-        return new AddMyBookLikeResponse(bookLike);
+        return new AddMyBookLikeResponse(bookLike.getBookLikeId());
     }
 }

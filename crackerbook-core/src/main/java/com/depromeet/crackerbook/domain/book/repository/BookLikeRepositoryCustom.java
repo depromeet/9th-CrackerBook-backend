@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface BookLikeRepositoryCustom {
     QueryResults<BookLikeDto> getBookLikeList(Long userId, Pageable pageable);
-//    Long addMyBookLike(Long userId, Long bookId);
+    Long getBookLikeId(Long userId, Long bookId);
+
 }

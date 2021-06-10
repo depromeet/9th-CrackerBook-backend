@@ -28,6 +28,7 @@ public class BookLikeService {
         return bookLikeRepository.getBookLikeList(userId, pageable);
     }
 
+    @Transactional
     public BookLike addMyBookLike(Long userId, Long bookId){
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
@@ -38,5 +39,18 @@ public class BookLikeService {
         BookLike bookLike = BookLike.builder(user, book);
 
         return bookLikeRepository.save(bookLike);
+    }
+
+    @Transactional
+    public Long deleteMyBookLike(Long userId, Long bookId){
+        Long bookLikeId = bookLikeRepository.getBookLikeId(userId, bookId);
+
+        if(bookLikeId == null){
+            throw new NotFoundApiException(ErrorCode.INVALID_BOOK_LIKE);
+        }
+
+        bookLikeRepository.deleteById(bookLikeId);
+
+        return bookLikeId;
     }
 }

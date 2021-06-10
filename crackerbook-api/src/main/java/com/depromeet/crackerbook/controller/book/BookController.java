@@ -5,6 +5,7 @@ import com.depromeet.crackerbook.controller.SuccessResponse;
 import com.depromeet.crackerbook.controller.book.dto.BookResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.AddMyBookLikeResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.BookSearchResponse;
+import com.depromeet.crackerbook.controller.book.dto.response.DeleteMyBookLikeResponse;
 import com.depromeet.crackerbook.controller.book.dto.response.kakao.KakaoBookDto;
 import com.depromeet.crackerbook.domain.book.Book;
 import com.depromeet.crackerbook.domain.book.BookLike;
@@ -99,13 +100,17 @@ public class BookController {
 
     }
 
-//    @Operation(summary = "등록된 관심 책 삭제")
-//    @DeleteMapping("/{bookId}/like")
-//    public SuccessResponse<> deleteMyBookLike(
-//        HttpServletRequest request,
-//        @PathVariable Long bookId
-//    ){
-//        Long userId = RequestUtil.getUserId(request);
-//
-//    }
+    @Operation(summary = "등록된 관심 책 삭제")
+    @DeleteMapping("/{bookId}/like")
+    public SuccessResponse<DeleteMyBookLikeResponse> deleteMyBookLike(
+        HttpServletRequest request,
+        @PathVariable Long bookId
+    ){
+        Long userId = RequestUtil.getUserId(request);
+
+        Long bookLikeId = bookLikeService.deleteMyBookLike(userId, bookId);
+        var response = DeleteMyBookLikeResponse.of(bookLikeId);
+
+        return new SuccessResponse<>(response);
+    }
 }
