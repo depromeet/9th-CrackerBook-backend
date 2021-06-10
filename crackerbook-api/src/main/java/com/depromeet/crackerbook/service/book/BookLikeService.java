@@ -42,15 +42,15 @@ public class BookLikeService {
     }
 
     @Transactional
-    public Long deleteMyBookLike(Long userId, Long bookId){
-        Long bookLikeId = bookLikeRepository.getBookLikeId(userId, bookId);
+    public BookLike deleteMyBookLike(Long userId, Long bookId){
+        BookLike bookLike = bookLikeRepository.getMyBookLike(userId, bookId);
 
-        if(bookLikeId == null){
+        if(bookLike == null){
             throw new NotFoundApiException(ErrorCode.INVALID_BOOK_LIKE);
         }
 
-        bookLikeRepository.deleteById(bookLikeId);
+        bookLikeRepository.deleteById(bookLike.getBookLikeId());
 
-        return bookLikeId;
+        return bookLike;
     }
 }

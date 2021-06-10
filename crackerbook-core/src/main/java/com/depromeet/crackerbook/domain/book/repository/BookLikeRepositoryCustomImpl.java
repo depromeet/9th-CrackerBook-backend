@@ -41,12 +41,14 @@ public class BookLikeRepositoryCustomImpl implements BookLikeRepositoryCustom {
     }
 
     @Override
-    public Long getBookLikeId(Long userId, Long bookId) {
+    public BookLike getMyBookLike(Long userId, Long bookId) {
         return queryFactory
-            .select(bookLike.bookLikeId)
-            .from(bookLike)
+            .selectFrom(bookLike)
             .where(userIdEq(userId).and(bookIdEq(bookId)))
             .fetchOne();
+//            .from(bookLike)
+//            .where(userIdEq(userId).and(bookIdEq(bookId)))
+//            .fetchOne();
     }
 
     private BooleanExpression userIdEq(Long userId) {

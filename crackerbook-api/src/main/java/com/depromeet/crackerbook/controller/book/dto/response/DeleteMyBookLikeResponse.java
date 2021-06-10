@@ -1,17 +1,18 @@
 package com.depromeet.crackerbook.controller.book.dto.response;
 
+import com.depromeet.crackerbook.domain.book.BookLike;
 import lombok.Getter;
 
 @Getter
 public class DeleteMyBookLikeResponse {
 
-    private final Long bookLikeId;
+    private final BookLike bookLike;
 
-    private DeleteMyBookLikeResponse(Long bookLikeId){
-        this.bookLikeId = bookLikeId;
+    private DeleteMyBookLikeResponse(BookLike bookLike){
+        this.bookLike = bookLike;
     }
 
-    public static DeleteMyBookLikeResponse of(Long bookLikeId){
-        return new DeleteMyBookLikeResponse(bookLikeId);
+    public static DeleteMyBookLikeResponse of(BookLike bookLike){
+        return new DeleteMyBookLikeResponse(bookLike);
     }
 }

@@ -108,8 +108,8 @@ public class BookController {
     ){
         Long userId = RequestUtil.getUserId(request);
 
-        Long bookLikeId = bookLikeService.deleteMyBookLike(userId, bookId);
-        var response = DeleteMyBookLikeResponse.of(bookLikeId);
+        BookLike bookLike = bookLikeService.deleteMyBookLike(userId, bookId);
+        var response = DeleteMyBookLikeResponse.of(bookLike);
 
         return new SuccessResponse<>(response);
     }
