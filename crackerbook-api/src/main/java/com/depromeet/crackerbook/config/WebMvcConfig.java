@@ -10,7 +10,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:3000", "https://develop.d2tw5qtwawbqat.amplifyapp.com")
+                .allowedOrigins(
+                        "http://localhost:3000"
+                        , "https://develop.d2tw5qtwawbqat.amplifyapp.com"
+                        , "https://www.crackerbook.club"
+                        , "https://front.dev.crackerbook.club"
+                )
         ;
         // TODO: production 환경에서는 localhost 제외
     }
