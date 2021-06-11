@@ -12,7 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowedOrigins(
                         "http://localhost:3000"
-//                        , "https://develop.d2tw5qtwawbqat.amplifyapp.com"
+                        , "https://develop.d2tw5qtwawbqat.amplifyapp.com"
                         , "https://www.crackerbook.club/"
                 )
         ;
