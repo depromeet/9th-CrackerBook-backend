@@ -40,10 +40,10 @@ public class Participant extends BaseEntity {
                 ;
     }
 
-    public static Participant CancelParticipant(
-            Long userId
-            , Long studyId
-    ) {
-
-    }
+//    public static Participant CancelParticipant(
+//            Long userId
+//            , Long studyId
+//    ) {
+//
+//    }
 }
