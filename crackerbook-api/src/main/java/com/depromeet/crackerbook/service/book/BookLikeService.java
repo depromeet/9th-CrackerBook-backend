@@ -9,6 +9,7 @@ import com.depromeet.crackerbook.domain.book.repository.BookRepository;
 import com.depromeet.crackerbook.domain.user.User;
 import com.depromeet.crackerbook.domain.user.repository.UserRepository;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
+import com.depromeet.crackerbook.service.user.UserService;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookLikeService {
 
     private final BookLikeRepository bookLikeRepository;
-    private final BookRepository bookRepository;
-    private final UserRepository userRepository;
+
+    private final BookService bookService;
+    private final UserService userService;
 
     public QueryResults<BookLikeDto> getBookLikeList(Long userId, Pageable pageable) {
         return bookLikeRepository.getBookLikeList(userId, pageable);
@@ -30,11 +32,9 @@ public class BookLikeService {
 
     @Transactional
     public BookLike addMyBookLike(Long userId, Long bookId){
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_USER));
 
-        Book book = bookRepository.findById(bookId)
-            .orElseThrow(() -> new NotFoundApiException(ErrorCode.INVALID_BOOK));
+        User user = userService.findUserById(userId);
+        Book book = bookService.findBookById(bookId);
 
         BookLike bookLike = BookLike.builder(user, book);
 

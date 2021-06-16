@@ -77,7 +77,7 @@ public class BookController {
 
     @Operation(summary = "책 상세 조회")
     @GetMapping("/{bookId}")
-    public SuccessResponse<BookResponse> getBookInfo(@PathVariable Long bookId){
+    public SuccessResponse<BookResponse> getBookInfo(@PathVariable Long bookId) {
 
         Book book = bookService.findBookById(bookId);
         var response = BookResponse.of(book);
@@ -102,10 +102,10 @@ public class BookController {
 
     @Operation(summary = "등록된 관심 책 삭제")
     @DeleteMapping("/{bookId}/like")
-    public SuccessResponse<DeleteMyBookLikeResponse> deleteMyBookLike(
+    public SuccessResponse<DeleteMyBookLikeResponse> deleteMyBookLike (
         HttpServletRequest request,
         @PathVariable Long bookId
-    ){
+    ) {
         Long userId = RequestUtil.getUserId(request);
 
         BookLike bookLike = bookLikeService.deleteMyBookLike(userId, bookId);
