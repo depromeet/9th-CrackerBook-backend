@@ -39,11 +39,4 @@ public class Participant extends BaseEntity {
                 .build()
                 ;
     }
-
-//    public static Participant CancelParticipant(
-//            Long userId
-//            , Long studyId
-//    ) {
-//
-//    }
 }

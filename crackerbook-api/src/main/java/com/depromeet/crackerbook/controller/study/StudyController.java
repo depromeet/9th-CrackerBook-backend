@@ -1,9 +1,10 @@
 package com.depromeet.crackerbook.controller.study;
 
 import com.depromeet.crackerbook.controller.SuccessResponse;
+import com.depromeet.crackerbook.controller.participant.dto.response.ApplyParticipantResponse;
+import com.depromeet.crackerbook.controller.participant.dto.response.CancelParticipantResponse;
 import com.depromeet.crackerbook.controller.study.dto.request.CreateStudyRequest;
 import com.depromeet.crackerbook.controller.study.dto.request.UpdateStudyRequest;
-import com.depromeet.crackerbook.controller.study.dto.response.ApplyStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.CreateStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.GetStudyResponse;
 import com.depromeet.crackerbook.controller.study.dto.response.UpdateStudyResponse;
@@ -64,7 +65,7 @@ public class StudyController {
     //
 
     @PostMapping("/studies/{studyId}/apply")
-    public SuccessResponse<ApplyStudyResponse> applyStudy(
+    public SuccessResponse<ApplyParticipantResponse> applyStudy(
             HttpServletRequest request
             , @PathVariable Long studyId
     ) {
@@ -72,19 +73,17 @@ public class StudyController {
 
         Participant participant = participantService.applyParticipant(studyId, userId);
 
-        return new SuccessResponse<>(ApplyStudyResponse.of(participant.getParticipantId()));
+        return new SuccessResponse<>(ApplyParticipantResponse.of(participant.getParticipantId()));
     }
 
     @DeleteMapping("/studies/{studyId}/apply")
-    public String cancelApplyStudy(
+    public SuccessResponse<CancelParticipantResponse> cancelApplyStudy(
             HttpServletRequest request
             , @PathVariable Long studyId
     ) {
         Long userId = RequestUtil.getUserId(request);
+        Long participantId = participantService.cancelParticipant(userId, studyId);
 
-
-//        Participant participant = participantService.applyParticipant(studyId, userId);
-
-        return "123";
+        return new SuccessResponse<>(CancelParticipantResponse.of(participantId));
     }
 }

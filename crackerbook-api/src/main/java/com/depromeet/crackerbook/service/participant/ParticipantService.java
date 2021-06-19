@@ -1,5 +1,6 @@
 package com.depromeet.crackerbook.service.participant;
 
+import com.depromeet.crackerbook.domain.participant.dto.ParticipantDto;
 import com.depromeet.crackerbook.exception.NotFoundApiException;
 import com.depromeet.crackerbook.common.ErrorCode;
 import com.depromeet.crackerbook.domain.study.Study;
@@ -36,10 +37,11 @@ public class ParticipantService {
         return participant;
     }
 
-    public Participant cancelParticipant(Long studyId, Long userId) {
+    public Long cancelParticipant(Long userId, Long studyId) {
+        ParticipantDto participant = participantRepository.getStudyParticipantByUserId(userId, studyId);
+        Long participantId = participant.getParticipantId();
 
-
-
-//        participantRepository.deleteById();
+        participantRepository.deleteById(participantId);
+        return participantId;
     }
 }

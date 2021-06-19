@@ -1,19 +1,20 @@
 package com.depromeet.crackerbook.domain.participant.repository;
 
-import com.depromeet.crackerbook.domain.participant.QParticipant;
 import com.depromeet.crackerbook.domain.participant.dto.ParticipantDto;
+import com.depromeet.crackerbook.domain.participant.dto.QParticipantDto;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import static com.depromeet.crackerbook.domain.participant.QParticipant.participant;
+import javax.persistence.EntityManager;
 
+import static com.depromeet.crackerbook.domain.participant.QParticipant.participant;
 
 public class ParticipantRepositoryCustomImpl implements ParticipantRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
-    public ParticipantRepositoryCustomImpl(JPAQueryFactory queryFactory) {
-        this.queryFactory = queryFactory;
+    public ParticipantRepositoryCustomImpl(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
     }
 
     @Override
@@ -21,8 +22,8 @@ public class ParticipantRepositoryCustomImpl implements ParticipantRepositoryCus
         return queryFactory
                 .select(new QParticipantDto(
                         participant.participantId,
-                        userId,
-                        studyId
+                        participant.study.studyId,
+                        participant.user.userId
                 ))
                 .from(participant)
                 .where(userIdEq(userId), studyIdEq(studyId))
