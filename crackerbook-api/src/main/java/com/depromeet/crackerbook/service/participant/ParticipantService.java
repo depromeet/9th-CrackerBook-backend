@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ParticipantService {
 
-    private Participant participant;
-    private ParticipantRepository participantRepository;
-    private StudyService studyService;
-    private UserService userService;
+    private final Participant participant;
+    private final ParticipantRepository participantRepository;
+    private final StudyService studyService;
+    private final UserService userService;
 
     public Participant applyParticipant(Long studyId, Long userId) {
         Study study = studyService.findStudyByStudyId(studyId);
