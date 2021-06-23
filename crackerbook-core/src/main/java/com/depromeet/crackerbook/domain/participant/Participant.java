@@ -4,11 +4,13 @@ import com.depromeet.crackerbook.domain.BaseEntity;
 import com.depromeet.crackerbook.domain.study.Study;
 import com.depromeet.crackerbook.domain.user.User;
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,4 +28,15 @@ public class Participant extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id")
     private Study study;
+
+    public static Participant CreateParticipant(
+            User user
+            , Study study
+    ) {
+        return new ParticipantBuilder()
+                .user(user)
+                .study(study)
+                .build()
+                ;
+    }
 }
