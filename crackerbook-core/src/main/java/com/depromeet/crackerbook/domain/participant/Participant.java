@@ -3,16 +3,14 @@ package com.depromeet.crackerbook.domain.participant;
 import com.depromeet.crackerbook.domain.BaseEntity;
 import com.depromeet.crackerbook.domain.study.Study;
 import com.depromeet.crackerbook.domain.user.User;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Builder
 @Entity
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Participant extends BaseEntity {
 
