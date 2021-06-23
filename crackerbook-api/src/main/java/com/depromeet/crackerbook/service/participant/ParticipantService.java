@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ParticipantService {
 
-    private final Participant participant;
     private final ParticipantRepository participantRepository;
     private final StudyService studyService;
     private final UserService userService;
