@@ -58,12 +58,6 @@ public class StudyController {
         return new SuccessResponse<>(UpdateStudyResponse.from(study.getStudyId()));
     }
 
-    //    @DeleteMapping("/{studyId}")
-    //    public String deleteStudy(@PathVariable String studyId) {
-    //
-    //    }
-    //
-
     @PostMapping("/studies/{studyId}/apply")
     public SuccessResponse<ApplyParticipantResponse> applyStudy(
             HttpServletRequest request
